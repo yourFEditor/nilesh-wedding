@@ -72,11 +72,11 @@ const RajasthaniArchHeader = ({ title, subtitle }: { title: string; subtitle?: s
       <path d="M340 35 L340 25 M345 35 L345 28 M350 35 L350 25" stroke="url(#archHeaderGold)" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
     <div className="absolute inset-0 flex flex-col items-center justify-center pt-6">
-      <h3 className="font-script text-3xl md:text-4xl text-cream drop-shadow-md">
+      <h3 className="font-script text-3xl md:text-4xl text-magenta drop-shadow-lg">
         {title}
       </h3>
       {subtitle && (
-        <p className="font-body text-xs md:text-sm text-cream/90 text-center max-w-xs mt-1 px-4">
+        <p className="font-body text-xs md:text-sm text-brown text-center max-w-xs mt-1 px-4">
           {subtitle}
         </p>
       )}
