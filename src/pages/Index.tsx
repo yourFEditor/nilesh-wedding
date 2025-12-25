@@ -2,7 +2,6 @@ import { FloatingElements } from "@/components/FloatingElements";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { InvitationSection } from "@/components/sections/InvitationSection";
 import { EventsSection } from "@/components/sections/EventsSection";
-import { PhotoGallery } from "@/components/sections/PhotoGallery";
 import { RSVPSection } from "@/components/sections/RSVPSection";
 import { LotusSVG, PeacockSVG } from "@/components/decorative/RajasthaniElements";
 import { motion } from "framer-motion";
@@ -33,13 +32,10 @@ const weddingData = {
   address: "A-21, Sudama Marg, Vijay Vadi, Path No. 6, Sikar Road, Jaipur",
   phone: "9828023034",
 
-  // Photos for gallery (add your own URLs here)
-  photos: [],
-
   // Events
   eventDays: [
     {
-      title: "Programme",
+      title: "Ganesh Sthapana",
       date: "Saturday, 31st January 2026",
       venue: "At Residence",
       address: "A-21, Sudama Marg, Vijay Vadi, Path No. 6, Sikar Road, Jaipur",
@@ -49,7 +45,7 @@ const weddingData = {
       ],
     },
     {
-      title: "Programme",
+      title: "Baan",
       date: "Monday, 2nd February 2026",
       venue: "At Residence",
       address: "A-21, Sudama Marg, Vijay Vadi, Path No. 6, Sikar Road, Jaipur",
@@ -59,7 +55,7 @@ const weddingData = {
       ],
     },
     {
-      title: "Programme",
+      title: "Sakdi Vinayak",
       date: "Wednesday, 4th February 2026",
       venue: "At Residence",
       address: "A-21, Sudama Marg, Vijay Vadi, Path No. 6, Sikar Road, Jaipur",
@@ -200,13 +196,6 @@ const Index = () => {
         nimantrak={weddingData.nimantrak}
         address={weddingData.address}
         phone={weddingData.phone}
-      />
-
-      {/* Photo Gallery */}
-      <PhotoGallery
-        photos={weddingData.photos}
-        title="Our Moments"
-        subtitle="A glimpse of our beautiful journey together"
       />
 
       {/* Events Timeline */}

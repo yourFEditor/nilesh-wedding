@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Divider } from "../OrnateFrame";
-import { MapPin, Clock, ExternalLink } from "lucide-react";
+import { Clock, ExternalLink } from "lucide-react";
 import {
   MarigoldSVG,
   MehendiHandSVG,
@@ -55,10 +55,10 @@ const getEventTheme = (title: string, eventNames: string[]) => {
       secondary: "#facc15",
       bg: "from-yellow-50 via-yellow-100/50 to-amber-50",
       border: "border-yellow-400/40",
-      headerBg: "from-yellow-400 to-amber-500",
+      headerBg: "bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-400",
       textColor: "text-amber-800",
       iconColor: "#ca8a04",
-      illustrations: ["marigold", "turmeric"],
+      illustrations: ["marigold", "turmeric", "kalash"],
     };
   }
   if (combined.includes("mehndi") || combined.includes("mehendi")) {
@@ -68,23 +68,23 @@ const getEventTheme = (title: string, eventNames: string[]) => {
       secondary: "#22c55e",
       bg: "from-green-50 via-emerald-50/50 to-green-100",
       border: "border-green-400/40",
-      headerBg: "from-green-500 to-emerald-600",
+      headerBg: "bg-gradient-to-r from-green-500 via-emerald-600 to-green-500",
       textColor: "text-green-800",
       iconColor: "#15803d",
-      illustrations: ["mehendi", "marigold"],
+      illustrations: ["mehendi", "marigold", "kalash"],
     };
   }
-  if (combined.includes("ganesh") || combined.includes("sthapana") || combined.includes("sthabpna") || combined.includes("vinayak")) {
+  if (combined.includes("ganesh") || combined.includes("sthapana") || combined.includes("sthabpna") || combined.includes("vinayak") || combined.includes("sakdi")) {
     return {
       theme: "ganesh",
       primary: "#ea580c",
       secondary: "#f97316",
       bg: "from-orange-50 via-orange-100/50 to-amber-50",
       border: "border-orange-400/40",
-      headerBg: "from-orange-500 to-amber-600",
+      headerBg: "bg-gradient-to-r from-orange-500 via-amber-600 to-orange-500",
       textColor: "text-orange-800",
       iconColor: "#c2410c",
-      illustrations: ["ganesh", "kalash"],
+      illustrations: ["ganesh", "kalash", "marigold"],
     };
   }
   if (combined.includes("baan") || combined.includes("ban")) {
@@ -94,10 +94,10 @@ const getEventTheme = (title: string, eventNames: string[]) => {
       secondary: "#eab308",
       bg: "from-amber-50 via-yellow-50/50 to-orange-50",
       border: "border-amber-500/40",
-      headerBg: "from-amber-500 to-yellow-600",
+      headerBg: "bg-gradient-to-r from-amber-500 via-yellow-600 to-amber-500",
       textColor: "text-amber-900",
       iconColor: "#a16207",
-      illustrations: ["turmeric", "kalash"],
+      illustrations: ["turmeric", "kalash", "marigold"],
     };
   }
   if (combined.includes("sangeet") || combined.includes("music") || combined.includes("dance") || combined.includes("camera") || combined.includes("lights")) {
@@ -107,10 +107,10 @@ const getEventTheme = (title: string, eventNames: string[]) => {
       secondary: "#3b82f6",
       bg: "from-blue-50 via-indigo-50/50 to-blue-100",
       border: "border-blue-400/40",
-      headerBg: "from-blue-600 to-indigo-700",
+      headerBg: "bg-gradient-to-r from-blue-600 via-indigo-700 to-blue-600",
       textColor: "text-blue-900",
       iconColor: "#1e3a8a",
-      illustrations: ["filmreel", "camera", "spotlight", "music"],
+      illustrations: ["filmreel", "camera", "spotlight", "music", "dholak"],
     };
   }
   if (combined.includes("barat") || combined.includes("nikasi") || combined.includes("lagan") || combined.includes("panigrahan") || combined.includes("wedding")) {
@@ -120,10 +120,10 @@ const getEventTheme = (title: string, eventNames: string[]) => {
       secondary: "#e11d48",
       bg: "from-rose-50 via-pink-50/50 to-rose-100",
       border: "border-rose-400/40",
-      headerBg: "from-rose-600 to-pink-700",
+      headerBg: "bg-gradient-to-r from-rose-600 via-pink-700 to-rose-600",
       textColor: "text-rose-900",
       iconColor: "#881337",
-      illustrations: ["horse", "kalash"],
+      illustrations: ["horse", "kalash", "marigold", "dholak"],
     };
   }
   // Default - gold/traditional
@@ -133,10 +133,10 @@ const getEventTheme = (title: string, eventNames: string[]) => {
     secondary: "#f59e0b",
     bg: "from-cream via-ivory to-cream-dark",
     border: "border-gold/40",
-    headerBg: "from-amber-600 to-yellow-700",
+    headerBg: "bg-gradient-to-r from-amber-600 via-yellow-700 to-amber-600",
     textColor: "text-brown",
     iconColor: "#b45309",
-    illustrations: ["kalash", "marigold"],
+    illustrations: ["kalash", "marigold", "ganesh"],
   };
 };
 
@@ -176,22 +176,19 @@ const getMapLink = (address: string, mapLink?: string) => {
   return `https://maps.google.com/?q=${encodeURIComponent(address)}`;
 };
 
-// Themed Rajasthani Arch Header Component - Title inside colored arch like reference
+// Themed Rajasthani Arch Header Component
 const RajasthaniArchHeader = ({ 
   title, 
-  subtitle,
-  textColor,
-  bgColor,
+  headerBg,
+  isSingleEvent,
 }: { 
   title: string; 
-  subtitle?: string;
-  gradientColors: string;
-  textColor: string;
-  bgColor?: string;
+  headerBg: string;
+  isSingleEvent?: boolean;
 }) => (
   <div className="relative">
     {/* Decorative arch with filled background */}
-    <svg viewBox="0 0 400 100" className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
+    <svg viewBox="0 0 400 80" className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
       <defs>
         <linearGradient id={`archGrad-${title.replace(/\s/g, '')}`} x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="currentColor" />
@@ -199,60 +196,106 @@ const RajasthaniArchHeader = ({
           <stop offset="100%" stopColor="currentColor" />
         </linearGradient>
       </defs>
-      {/* Filled arch background */}
-      <path
-        d="M0 100 L0 60 Q0 30 30 30 L120 30 Q150 30 170 15 Q185 2 200 2 Q215 2 230 15 Q250 30 280 30 L370 30 Q400 30 400 60 L400 100 Z"
-        className={`fill-current ${textColor} opacity-15`}
-      />
       {/* Arch outline */}
       <path
-        d="M0 100 L0 60 Q0 30 30 30 L120 30 Q150 30 170 15 Q185 2 200 2 Q215 2 230 15 Q250 30 280 30 L370 30 Q400 30 400 60 L400 100"
-        className={`stroke-current ${textColor} fill-none opacity-60`}
+        d="M0 80 L0 50 Q0 25 25 25 L130 25 Q160 25 175 12 Q188 2 200 2 Q212 2 225 12 Q240 25 270 25 L375 25 Q400 25 400 50 L400 80"
+        className="stroke-current fill-none opacity-40"
         strokeWidth="2"
       />
       {/* Inner arch detail */}
       <path
-        d="M15 100 L15 65 Q15 40 40 40 L125 40 Q155 40 175 25 Q190 12 200 12 Q210 12 225 25 Q245 40 275 40 L360 40 Q385 40 385 65 L385 100"
-        className={`stroke-current ${textColor} fill-none opacity-30`}
+        d="M10 80 L10 52 Q10 32 32 32 L135 32 Q163 32 178 18 Q190 8 200 8 Q210 8 222 18 Q237 32 265 32 L368 32 Q390 32 390 52 L390 80"
+        className="stroke-current fill-none opacity-20"
         strokeWidth="1"
       />
       {/* Top kalash ornament */}
-      <circle cx="200" cy="10" r="7" className={`fill-current ${textColor} opacity-80`} />
-      <path d="M193 10 L200 2 L207 10" className={`fill-current ${textColor} opacity-80`} />
+      <circle cx="200" cy="8" r="5" className="fill-current opacity-60" />
+      <path d="M195 8 L200 2 L205 8" className="fill-current opacity-60" />
       {/* Side decorative dots */}
-      <circle cx="70" cy="45" r="4" className={`fill-current ${textColor} opacity-40`} />
-      <circle cx="330" cy="45" r="4" className={`fill-current ${textColor} opacity-40`} />
+      <circle cx="60" cy="40" r="3" className="fill-current opacity-30" />
+      <circle cx="340" cy="40" r="3" className="fill-current opacity-30" />
       {/* Corner decorative curves */}
-      <path d="M10 90 Q10 70 30 70" className={`stroke-current ${textColor} fill-none opacity-30`} strokeWidth="1.5" />
-      <path d="M390 90 Q390 70 370 70" className={`stroke-current ${textColor} fill-none opacity-30`} strokeWidth="1.5" />
+      <path d="M8 75 Q8 55 28 55" className="stroke-current fill-none opacity-25" strokeWidth="1.5" />
+      <path d="M392 75 Q392 55 372 55" className="stroke-current fill-none opacity-25" strokeWidth="1.5" />
     </svg>
     
-    {/* Title content positioned over the arch */}
-    <div className="absolute inset-0 flex flex-col items-center justify-center pt-2">
-      <h3 className={`font-script text-xl sm:text-2xl md:text-3xl ${textColor} text-glow-gold leading-tight text-center px-4`}>
+    {/* Title content positioned in header bar */}
+    <div className={`absolute inset-x-0 top-1/2 -translate-y-1/2 ${headerBg} mx-4 sm:mx-8 py-2 px-4 rounded-full shadow-lg`}>
+      <h3 className={`font-script ${isSingleEvent ? 'text-lg sm:text-xl md:text-2xl' : 'text-xl sm:text-2xl md:text-3xl'} text-white text-center text-shadow-heading leading-tight drop-shadow-lg`}>
         {title}
       </h3>
-      {subtitle && (
-        <p className={`font-body text-[10px] sm:text-xs ${textColor} opacity-70 text-center max-w-[250px] mt-1 px-4 leading-tight`}>
-          {subtitle}
-        </p>
-      )}
     </div>
   </div>
+);
+
+// Ornate corner decoration SVG
+const OrnateCorner = ({ className, rotate = 0 }: { className: string; rotate?: number }) => (
+  <svg viewBox="0 0 80 80" className={className} style={{ transform: `rotate(${rotate}deg)` }}>
+    <defs>
+      <linearGradient id="cornerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="currentColor" stopOpacity="0.8" />
+        <stop offset="100%" stopColor="currentColor" stopOpacity="0.3" />
+      </linearGradient>
+    </defs>
+    <path d="M0 0 L0 50 Q0 0 50 0 Z" fill="url(#cornerGrad)" opacity="0.3" />
+    <path d="M0 0 Q25 25 0 50" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.6" />
+    <path d="M0 0 Q25 25 50 0" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.6" />
+    <circle cx="12" cy="12" r="3" fill="currentColor" opacity="0.5" />
+    <path d="M5 30 Q15 20 25 30" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.4" />
+    <path d="M30 5 Q20 15 30 25" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.4" />
+  </svg>
+);
+
+// Decorative side pattern
+const SidePattern = ({ className, flip = false }: { className: string; flip?: boolean }) => (
+  <svg viewBox="0 0 20 100" className={className} style={{ transform: flip ? 'scaleX(-1)' : undefined }}>
+    <path d="M10 0 L10 100" stroke="currentColor" strokeWidth="0.5" opacity="0.3" />
+    <circle cx="10" cy="10" r="3" fill="currentColor" opacity="0.4" />
+    <circle cx="10" cy="30" r="2" fill="currentColor" opacity="0.3" />
+    <circle cx="10" cy="50" r="3" fill="currentColor" opacity="0.4" />
+    <circle cx="10" cy="70" r="2" fill="currentColor" opacity="0.3" />
+    <circle cx="10" cy="90" r="3" fill="currentColor" opacity="0.4" />
+    <path d="M5 20 Q10 15 15 20" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.3" />
+    <path d="M5 40 Q10 35 15 40" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.3" />
+    <path d="M5 60 Q10 55 15 60" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.3" />
+    <path d="M5 80 Q10 75 15 80" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.3" />
+  </svg>
 );
 
 export const EventsSection = ({ days }: EventsSectionProps) => {
   return (
     <section className="relative py-12 md:py-20 lg:py-32 bg-gradient-to-b from-ivory via-cream to-cream-dark overflow-hidden">
       {/* Background decorative pattern */}
-      <div className="absolute inset-0 opacity-[0.02]">
+      <div className="absolute inset-0 opacity-[0.03]">
         <div
           className="w-full h-full"
           style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='50' cy='50' r='40' stroke='%23C5A355' stroke-width='0.5' fill='none'/%3E%3Ccircle cx='50' cy='50' r='20' stroke='%23C5A355' stroke-width='0.5' fill='none'/%3E%3C/svg%3E")`,
-            backgroundSize: "100px 100px",
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='50' cy='50' r='40' stroke='%23C5A355' stroke-width='0.5' fill='none'/%3E%3Ccircle cx='50' cy='50' r='20' stroke='%23C5A355' stroke-width='0.5' fill='none'/%3E%3Cpath d='M50 10 L50 90 M10 50 L90 50' stroke='%23C5A355' stroke-width='0.3' /%3E%3C/svg%3E")`,
+            backgroundSize: "120px 120px",
           }}
         />
+      </div>
+
+      {/* Floating corner decorations */}
+      <div className="absolute top-10 left-10 opacity-20 hidden lg:block">
+        <FloatingDecoration delay={0}>
+          <KalashSVG className="w-16 h-16" color="#C5A355" />
+        </FloatingDecoration>
+      </div>
+      <div className="absolute top-10 right-10 opacity-20 hidden lg:block">
+        <FloatingDecoration delay={1}>
+          <MarigoldSVG className="w-14 h-14" color="#C5A355" />
+        </FloatingDecoration>
+      </div>
+      <div className="absolute bottom-10 left-10 opacity-20 hidden lg:block">
+        <FloatingDecoration delay={0.5}>
+          <GaneshSmallSVG className="w-16 h-16" color="#C5A355" />
+        </FloatingDecoration>
+      </div>
+      <div className="absolute bottom-10 right-10 opacity-20 hidden lg:block">
+        <FloatingDecoration delay={1.5}>
+          <DholakSVG className="w-14 h-14" color="#C5A355" />
+        </FloatingDecoration>
       </div>
 
       {/* Section Title */}
@@ -269,27 +312,46 @@ export const EventsSection = ({ days }: EventsSectionProps) => {
         <Divider className="max-w-xs mx-auto" />
       </motion.div>
 
-      <div className="container max-w-5xl mx-auto px-3 sm:px-4 relative z-10">
-        {/* Grid layout for desktop - smaller cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {days.map((day, dayIndex) => (
-            <EventDayCard key={dayIndex} day={day} index={dayIndex} isCompact={day.events.length <= 2} />
-          ))}
+      <div className="container max-w-6xl mx-auto px-3 sm:px-4 relative z-10">
+        {/* Grid layout for desktop - smaller cards, same height */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 auto-rows-fr">
+          {days.map((day, dayIndex) => {
+            const isSingleEvent = day.events.length === 1;
+            // Haldi and Sangeet should be in same row (2 columns each)
+            const isLargeCard = day.events.length > 2 || Boolean(day.subtitle);
+            
+            return (
+              <EventDayCard 
+                key={dayIndex} 
+                day={day} 
+                index={dayIndex} 
+                isSingleEvent={isSingleEvent}
+                isLargeCard={isLargeCard}
+              />
+            );
+          })}
         </div>
       </div>
     </section>
   );
 };
 
-const EventDayCard = ({ day, index, isCompact = false }: { day: EventDay; index: number; isCompact?: boolean }) => {
+const EventDayCard = ({ 
+  day, 
+  index, 
+  isSingleEvent = false,
+  isLargeCard = false 
+}: { 
+  day: EventDay; 
+  index: number; 
+  isSingleEvent?: boolean;
+  isLargeCard?: boolean;
+}) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
   
   const eventNames = day.events.map(e => e.name);
   const theme = getEventTheme(day.title, eventNames);
-  
-  // For larger events (more than 2 sub-events), span full width
-  const spanFull = day.events.length > 2 || day.subtitle;
 
   return (
     <motion.div
@@ -297,153 +359,122 @@ const EventDayCard = ({ day, index, isCompact = false }: { day: EventDay; index:
       initial={{ opacity: 0, y: 50 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.1 }}
-      className={`relative ${spanFull ? 'md:col-span-2 lg:col-span-3' : ''}`}
+      className={`relative h-full ${isLargeCard ? 'lg:col-span-1' : ''}`}
     >
-      {/* Floating illustrations - only show on larger cards */}
-      {spanFull && (
-        <>
-          <div className="absolute -left-2 sm:-left-4 md:-left-12 top-1/4 opacity-40 hidden md:block">
-            <FloatingDecoration delay={0}>
-              {renderIllustration(theme.illustrations[0], theme.primary, "w-10 h-10 md:w-14 md:h-14")}
-            </FloatingDecoration>
-          </div>
-          
-          <div className="absolute -right-2 sm:-right-4 md:-right-12 top-1/3 opacity-40 hidden md:block">
-            <FloatingDecoration delay={0.5}>
-              {renderIllustration(theme.illustrations[1] || theme.illustrations[0], theme.secondary, "w-8 h-8 md:w-12 md:h-12")}
-            </FloatingDecoration>
-          </div>
-        </>
-      )}
-
       {/* Card with themed styling */}
-      <div className={`relative bg-gradient-to-br ${theme.bg} backdrop-blur-sm rounded-lg overflow-hidden shadow-xl border-2 ${theme.border}`}>
+      <div className={`relative bg-gradient-to-br ${theme.bg} backdrop-blur-sm rounded-xl overflow-hidden shadow-xl border-2 ${theme.border} h-full flex flex-col`}>
+        
         {/* Ornate corner decorations */}
-        <div className="absolute top-0 left-0 w-10 h-10 md:w-14 md:h-14">
-          <svg viewBox="0 0 60 60" className={`w-full h-full ${theme.textColor} opacity-50`}>
-            <path d="M0 0 L0 40 Q0 0 40 0 Z" fill="currentColor" opacity="0.2" />
-            <path d="M0 0 Q30 30 0 60 M0 0 Q30 30 60 0" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.5" />
-          </svg>
-        </div>
-        <div className="absolute top-0 right-0 w-10 h-10 md:w-14 md:h-14 rotate-90">
-          <svg viewBox="0 0 60 60" className={`w-full h-full ${theme.textColor} opacity-50`}>
-            <path d="M0 0 L0 40 Q0 0 40 0 Z" fill="currentColor" opacity="0.2" />
-            <path d="M0 0 Q30 30 0 60 M0 0 Q30 30 60 0" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.5" />
-          </svg>
-        </div>
-        <div className="absolute bottom-0 left-0 w-10 h-10 md:w-14 md:h-14 -rotate-90">
-          <svg viewBox="0 0 60 60" className={`w-full h-full ${theme.textColor} opacity-50`}>
-            <path d="M0 0 L0 40 Q0 0 40 0 Z" fill="currentColor" opacity="0.2" />
-            <path d="M0 0 Q30 30 0 60 M0 0 Q30 30 60 0" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.5" />
-          </svg>
-        </div>
-        <div className="absolute bottom-0 right-0 w-10 h-10 md:w-14 md:h-14 rotate-180">
-          <svg viewBox="0 0 60 60" className={`w-full h-full ${theme.textColor} opacity-50`}>
-            <path d="M0 0 L0 40 Q0 0 40 0 Z" fill="currentColor" opacity="0.2" />
-            <path d="M0 0 Q30 30 0 60 M0 0 Q30 30 60 0" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.5" />
-          </svg>
-        </div>
+        <OrnateCorner className={`absolute top-0 left-0 w-12 h-12 ${theme.textColor}`} rotate={0} />
+        <OrnateCorner className={`absolute top-0 right-0 w-12 h-12 ${theme.textColor}`} rotate={90} />
+        <OrnateCorner className={`absolute bottom-0 left-0 w-12 h-12 ${theme.textColor}`} rotate={-90} />
+        <OrnateCorner className={`absolute bottom-0 right-0 w-12 h-12 ${theme.textColor}`} rotate={180} />
 
-        {/* Mobile corner illustrations */}
-        <div className="absolute top-2 right-2 opacity-30 sm:hidden">
+        {/* Side patterns */}
+        <SidePattern className={`absolute left-0 top-1/4 h-1/2 w-4 ${theme.textColor}`} />
+        <SidePattern className={`absolute right-0 top-1/4 h-1/2 w-4 ${theme.textColor}`} flip />
+
+        {/* Floating illustrations in card corners */}
+        <div className="absolute top-14 right-3 opacity-25">
           {renderIllustration(theme.illustrations[0], theme.primary, "w-8 h-8")}
         </div>
+        <div className="absolute bottom-16 left-3 opacity-25">
+          {renderIllustration(theme.illustrations[1] || theme.illustrations[0], theme.secondary, "w-6 h-6")}
+        </div>
+        {theme.illustrations[2] && (
+          <div className="absolute bottom-16 right-3 opacity-20">
+            {renderIllustration(theme.illustrations[2], theme.primary, "w-6 h-6")}
+          </div>
+        )}
 
         {/* Arch Header with theme color */}
         <div className={theme.textColor}>
           <RajasthaniArchHeader 
-            title={day.title} 
-            subtitle={day.subtitle} 
-            gradientColors={theme.textColor}
-            textColor={theme.textColor}
+            title={day.title}
+            headerBg={theme.headerBg}
+            isSingleEvent={isSingleEvent}
           />
         </div>
 
         {/* Date */}
-        <div className={`bg-gradient-to-r from-transparent via-current/10 to-transparent px-4 sm:px-6 py-2 sm:py-3 text-center ${theme.textColor}`}>
-          <p className="font-heading text-lg sm:text-xl md:text-2xl font-semibold text-shadow-heading">
+        <div className={`px-4 py-3 text-center ${theme.textColor}`}>
+          <p className="font-heading text-base sm:text-lg font-semibold text-shadow-heading">
             {day.date}
           </p>
         </div>
 
         {/* Decorative divider */}
-        <div className="flex items-center justify-center px-4 sm:px-8">
+        <div className="flex items-center justify-center px-6">
           <div className={`flex-1 h-px bg-gradient-to-r from-transparent via-current to-transparent ${theme.textColor} opacity-30`} />
-          <svg viewBox="0 0 30 15" className={`w-6 h-3 sm:w-8 sm:h-4 mx-2 ${theme.textColor}`}>
-            <path d="M0 7.5 L10 7.5 M20 7.5 L30 7.5" stroke="currentColor" strokeWidth="1" />
+          <svg viewBox="0 0 30 15" className={`w-6 h-3 mx-2 ${theme.textColor}`}>
+            <path d="M0 7.5 L8 7.5 M22 7.5 L30 7.5" stroke="currentColor" strokeWidth="1" />
             <circle cx="15" cy="7.5" r="3" fill="currentColor" />
+            <circle cx="15" cy="7.5" r="5" stroke="currentColor" fill="none" strokeWidth="0.5" opacity="0.5" />
           </svg>
           <div className={`flex-1 h-px bg-gradient-to-r from-transparent via-current to-transparent ${theme.textColor} opacity-30`} />
         </div>
 
-        {/* Events */}
-        <div className="p-4 sm:p-6 space-y-2 sm:space-y-3">
-          {day.events.map((event, eventIndex) => (
-            <motion.div
-              key={eventIndex}
-              initial={{ opacity: 0, x: -20 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ delay: 0.2 + eventIndex * 0.1 }}
-              className={`flex items-center justify-between py-2 sm:py-3 border-b ${theme.border} last:border-0`}
-            >
-              <div className="flex-1 min-w-0">
-                <h4 className={`font-heading text-base sm:text-lg ${theme.textColor} font-semibold text-shadow-heading truncate`}>
-                  {event.name}
-                </h4>
-                {event.description && (
-                  <p className="font-body text-xs sm:text-sm opacity-70 mt-1 line-clamp-2">
-                    {event.description}
-                  </p>
-                )}
+        {/* Events - for single event, just show time centered */}
+        <div className="p-4 flex-1 flex flex-col">
+          {isSingleEvent ? (
+            <div className="flex-1 flex items-center justify-center">
+              <div className={`flex items-center gap-2 ${theme.textColor}`}>
+                <Clock className="w-4 h-4" />
+                <span className="font-heading text-lg font-semibold">{day.events[0].time}</span>
               </div>
-              <div className={`flex items-center gap-1 sm:gap-2 ${theme.textColor} ml-2 flex-shrink-0`}>
-                <Clock className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="font-body text-sm sm:text-base font-medium whitespace-nowrap">{event.time}</span>
-              </div>
-            </motion.div>
-          ))}
+            </div>
+          ) : (
+            <div className="space-y-2">
+              {day.events.map((event, eventIndex) => (
+                <motion.div
+                  key={eventIndex}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={isInView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ delay: 0.2 + eventIndex * 0.1 }}
+                  className={`flex items-center justify-between py-2 border-b ${theme.border} last:border-0`}
+                >
+                  <h4 className={`font-heading text-sm sm:text-base ${theme.textColor} font-semibold truncate`}>
+                    {event.name}
+                  </h4>
+                  <div className={`flex items-center gap-1 ${theme.textColor} ml-2 flex-shrink-0`}>
+                    <Clock className="w-3 h-3" />
+                    <span className="font-body text-xs sm:text-sm font-medium whitespace-nowrap">{event.time}</span>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
         </div>
 
-        {/* Venue with Google Maps link */}
+        {/* Venue with Google Maps link - no pin icon */}
         {(day.venue || day.address) && (
-          <div className={`bg-gradient-to-r from-transparent via-current/5 to-transparent px-4 sm:px-6 py-3 sm:py-4 border-t ${theme.border} ${theme.textColor}`}>
+          <div className={`mt-auto bg-gradient-to-r from-transparent via-current/5 to-transparent px-4 py-3 border-t ${theme.border} ${theme.textColor}`}>
             <a 
               href={getMapLink(day.address || day.venue || "", day.mapLink)}
               target="_blank"
               rel="noopener noreferrer"
               className="block hover:opacity-80 transition-opacity cursor-pointer group"
             >
-              <div className="flex items-start gap-2 sm:gap-3 justify-center text-center">
-                <MapPin className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 mt-0.5" />
-                <div className="min-w-0">
-                  <p className="font-body text-[10px] sm:text-xs uppercase tracking-widest opacity-70 mb-1 flex items-center justify-center gap-1">
-                    Venue
-                    <ExternalLink className="w-3 h-3 opacity-60 group-hover:opacity-100 transition-opacity" />
+              <div className="text-center">
+                <p className="font-body text-[10px] uppercase tracking-widest opacity-70 mb-1 flex items-center justify-center gap-1">
+                  Venue
+                  <ExternalLink className="w-2.5 h-2.5 opacity-60 group-hover:opacity-100 transition-opacity" />
+                </p>
+                {day.venue && (
+                  <p className="font-heading text-sm font-semibold group-hover:underline">
+                    {day.venue}
                   </p>
-                  {day.venue && (
-                    <p className="font-heading text-base sm:text-lg font-semibold text-shadow-heading group-hover:underline">
-                      {day.venue}
-                    </p>
-                  )}
-                  {day.address && (
-                    <p className="font-body text-xs sm:text-sm opacity-80 break-words group-hover:underline">
-                      {day.address}
-                    </p>
-                  )}
-                </div>
+                )}
+                {day.address && (
+                  <p className="font-body text-xs opacity-80 break-words group-hover:underline leading-tight">
+                    {day.address}
+                  </p>
+                )}
               </div>
             </a>
           </div>
         )}
-
-        {/* Bottom illustration bar for mobile */}
-        <div className="flex justify-center gap-4 py-2 sm:hidden opacity-30">
-          {renderIllustration(theme.illustrations[0], theme.primary, "w-6 h-6")}
-          {renderIllustration(theme.illustrations[1] || theme.illustrations[0], theme.secondary, "w-6 h-6")}
-        </div>
       </div>
     </motion.div>
   );
 };
-
-export default EventsSection;
