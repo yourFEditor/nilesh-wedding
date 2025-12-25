@@ -313,20 +313,34 @@ export const EventsSection = ({ days }: EventsSectionProps) => {
       </motion.div>
 
       <div className="container max-w-6xl mx-auto px-3 sm:px-4 relative z-10">
-        {/* Grid layout for desktop - smaller cards, same height */}
+        {/* Responsive grid; when last row has a single card, let it span full width to avoid empty space */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 auto-rows-fr">
           {days.map((day, dayIndex) => {
+            const total = days.length;
+            const isLast = dayIndex === total - 1;
+
             const isSingleEvent = day.events.length === 1;
-            // Haldi and Sangeet should be in same row (2 columns each)
+            // (kept for compatibility with existing intent)
             const isLargeCard = day.events.length > 2 || Boolean(day.subtitle);
-            
+
+            const mdSingleLast = total % 2 === 1 && isLast;
+            const lgSingleLast = total % 3 === 1 && isLast;
+
+            const spanClass = [
+              mdSingleLast ? "md:col-span-2 md:max-w-2xl md:mx-auto" : "",
+              lgSingleLast ? "lg:col-span-3 lg:max-w-4xl lg:mx-auto" : "",
+            ]
+              .filter(Boolean)
+              .join(" ");
+
             return (
-              <EventDayCard 
-                key={dayIndex} 
-                day={day} 
-                index={dayIndex} 
+              <EventDayCard
+                key={dayIndex}
+                day={day}
+                index={dayIndex}
                 isSingleEvent={isSingleEvent}
                 isLargeCard={isLargeCard}
+                layoutClass={spanClass}
               />
             );
           })}
@@ -336,21 +350,23 @@ export const EventsSection = ({ days }: EventsSectionProps) => {
   );
 };
 
-const EventDayCard = ({ 
-  day, 
-  index, 
+const EventDayCard = ({
+  day,
+  index,
   isSingleEvent = false,
-  isLargeCard = false 
-}: { 
-  day: EventDay; 
-  index: number; 
+  isLargeCard = false,
+  layoutClass = "",
+}: {
+  day: EventDay;
+  index: number;
   isSingleEvent?: boolean;
   isLargeCard?: boolean;
+  layoutClass?: string;
 }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
-  
-  const eventNames = day.events.map(e => e.name);
+
+  const eventNames = day.events.map((e) => e.name);
   const theme = getEventTheme(day.title, eventNames);
 
   return (
@@ -359,48 +375,83 @@ const EventDayCard = ({
       initial={{ opacity: 0, y: 50 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.1 }}
-      className={`relative h-full ${isLargeCard ? 'lg:col-span-1' : ''}`}
+      className={`relative h-full w-full ${layoutClass} ${isLargeCard ? "" : ""}`}
     >
       {/* Card with themed styling */}
-      <div className={`relative bg-gradient-to-br ${theme.bg} backdrop-blur-sm rounded-xl overflow-hidden shadow-xl border-2 ${theme.border} h-full flex flex-col min-h-[320px]`}>
-        
+      <div
+        className={`relative bg-gradient-to-br ${theme.bg} backdrop-blur-sm rounded-xl overflow-hidden shadow-xl border-2 ${theme.border} h-full flex flex-col min-h-[260px] sm:min-h-[280px] md:min-h-[300px]`}
+      >
         {/* Subtle background pattern */}
         <div className="absolute inset-0 opacity-[0.04] pointer-events-none">
           <div
             className="w-full h-full"
             style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L30 55 M5 30 L55 30' stroke='%23${theme.primary.replace('#', '')}' stroke-width='0.5' opacity='0.5'/%3E%3Ccircle cx='30' cy='30' r='20' stroke='%23${theme.primary.replace('#', '')}' stroke-width='0.3' fill='none'/%3E%3Ccircle cx='30' cy='30' r='10' stroke='%23${theme.primary.replace('#', '')}' stroke-width='0.3' fill='none'/%3E%3C/svg%3E")`,
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L30 55 M5 30 L55 30' stroke='%23${theme.primary.replace(
+                "#",
+                ""
+              )}' stroke-width='0.5' opacity='0.5'/%3E%3Ccircle cx='30' cy='30' r='20' stroke='%23${theme.primary.replace(
+                "#",
+                ""
+              )}' stroke-width='0.3' fill='none'/%3E%3Ccircle cx='30' cy='30' r='10' stroke='%23${theme.primary.replace(
+                "#",
+                ""
+              )}' stroke-width='0.3' fill='none'/%3E%3C/svg%3E")`,
               backgroundSize: "60px 60px",
             }}
           />
         </div>
 
         {/* Ornate corner decorations */}
-        <OrnateCorner className={`absolute top-0 left-0 w-12 h-12 ${theme.textColor}`} rotate={0} />
-        <OrnateCorner className={`absolute top-0 right-0 w-12 h-12 ${theme.textColor}`} rotate={90} />
-        <OrnateCorner className={`absolute bottom-0 left-0 w-12 h-12 ${theme.textColor}`} rotate={-90} />
-        <OrnateCorner className={`absolute bottom-0 right-0 w-12 h-12 ${theme.textColor}`} rotate={180} />
+        <OrnateCorner
+          className={`absolute top-0 left-0 w-12 h-12 ${theme.textColor}`}
+          rotate={0}
+        />
+        <OrnateCorner
+          className={`absolute top-0 right-0 w-12 h-12 ${theme.textColor}`}
+          rotate={90}
+        />
+        <OrnateCorner
+          className={`absolute bottom-0 left-0 w-12 h-12 ${theme.textColor}`}
+          rotate={-90}
+        />
+        <OrnateCorner
+          className={`absolute bottom-0 right-0 w-12 h-12 ${theme.textColor}`}
+          rotate={180}
+        />
 
         {/* Side patterns */}
-        <SidePattern className={`absolute left-0 top-1/4 h-1/2 w-4 ${theme.textColor}`} />
-        <SidePattern className={`absolute right-0 top-1/4 h-1/2 w-4 ${theme.textColor}`} flip />
+        <SidePattern
+          className={`absolute left-0 top-1/4 h-1/2 w-4 ${theme.textColor}`}
+        />
+        <SidePattern
+          className={`absolute right-0 top-1/4 h-1/2 w-4 ${theme.textColor}`}
+          flip
+        />
 
         {/* Floating illustrations in card corners */}
         <div className="absolute top-14 right-3 opacity-25">
           {renderIllustration(theme.illustrations[0], theme.primary, "w-8 h-8")}
         </div>
         <div className="absolute bottom-16 left-3 opacity-25">
-          {renderIllustration(theme.illustrations[1] || theme.illustrations[0], theme.secondary, "w-6 h-6")}
+          {renderIllustration(
+            theme.illustrations[1] || theme.illustrations[0],
+            theme.secondary,
+            "w-6 h-6"
+          )}
         </div>
         {theme.illustrations[2] && (
           <div className="absolute bottom-16 right-3 opacity-20">
-            {renderIllustration(theme.illustrations[2], theme.primary, "w-6 h-6")}
+            {renderIllustration(
+              theme.illustrations[2],
+              theme.primary,
+              "w-6 h-6"
+            )}
           </div>
         )}
 
         {/* Arch Header with theme color */}
         <div className={theme.textColor}>
-          <RajasthaniArchHeader 
+          <RajasthaniArchHeader
             title={day.title}
             headerBg={theme.headerBg}
             isSingleEvent={isSingleEvent}
@@ -416,22 +467,44 @@ const EventDayCard = ({
 
         {/* Decorative divider */}
         <div className="flex items-center justify-center px-6">
-          <div className={`flex-1 h-px bg-gradient-to-r from-transparent via-current to-transparent ${theme.textColor} opacity-30`} />
+          <div
+            className={`flex-1 h-px bg-gradient-to-r from-transparent via-current to-transparent ${theme.textColor} opacity-30`}
+          />
           <svg viewBox="0 0 30 15" className={`w-6 h-3 mx-2 ${theme.textColor}`}>
-            <path d="M0 7.5 L8 7.5 M22 7.5 L30 7.5" stroke="currentColor" strokeWidth="1" />
+            <path
+              d="M0 7.5 L8 7.5 M22 7.5 L30 7.5"
+              stroke="currentColor"
+              strokeWidth="1"
+            />
             <circle cx="15" cy="7.5" r="3" fill="currentColor" />
-            <circle cx="15" cy="7.5" r="5" stroke="currentColor" fill="none" strokeWidth="0.5" opacity="0.5" />
+            <circle
+              cx="15"
+              cy="7.5"
+              r="5"
+              stroke="currentColor"
+              fill="none"
+              strokeWidth="0.5"
+              opacity="0.5"
+            />
           </svg>
-          <div className={`flex-1 h-px bg-gradient-to-r from-transparent via-current to-transparent ${theme.textColor} opacity-30`} />
+          <div
+            className={`flex-1 h-px bg-gradient-to-r from-transparent via-current to-transparent ${theme.textColor} opacity-30`}
+          />
         </div>
 
-        {/* Events - for single event, just show time centered */}
-        <div className="p-4 flex-1 flex flex-col justify-center">
+        {/* Events - for single event, keep it compact (avoid large empty space) */}
+        <div
+          className={`p-4 flex-1 flex flex-col ${
+            isSingleEvent ? "justify-start" : "justify-center"
+          }`}
+        >
           {isSingleEvent ? (
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center pt-2">
               <div className={`flex items-center gap-2 ${theme.textColor}`}>
                 <Clock className="w-5 h-5" />
-                <span className="font-heading text-xl font-semibold">{day.events[0].time}</span>
+                <span className="font-heading text-xl font-semibold">
+                  {day.events[0].time}
+                </span>
               </div>
             </div>
           ) : (
@@ -444,12 +517,18 @@ const EventDayCard = ({
                   transition={{ delay: 0.2 + eventIndex * 0.1 }}
                   className={`flex items-center justify-between py-2 border-b ${theme.border} last:border-0`}
                 >
-                  <h4 className={`font-heading text-sm sm:text-base ${theme.textColor} font-semibold truncate`}>
+                  <h4
+                    className={`font-heading text-sm sm:text-base ${theme.textColor} font-semibold truncate`}
+                  >
                     {event.name}
                   </h4>
-                  <div className={`flex items-center gap-1 ${theme.textColor} ml-2 flex-shrink-0`}>
+                  <div
+                    className={`flex items-center gap-1 ${theme.textColor} ml-2 flex-shrink-0`}
+                  >
                     <Clock className="w-3 h-3" />
-                    <span className="font-body text-xs sm:text-sm font-medium whitespace-nowrap">{event.time}</span>
+                    <span className="font-body text-xs sm:text-sm font-medium whitespace-nowrap">
+                      {event.time}
+                    </span>
                   </div>
                 </motion.div>
               ))}
@@ -459,8 +538,12 @@ const EventDayCard = ({
 
         {/* Venue with Google Maps link - no pin icon */}
         {(day.venue || day.address) && (
-          <div className={`mt-auto bg-gradient-to-r from-transparent via-current/5 to-transparent px-4 py-3 border-t ${theme.border} ${theme.textColor}`}>
-            <a 
+          <div
+            className={`${
+              isSingleEvent ? "mt-2" : "mt-auto"
+            } bg-gradient-to-r from-transparent via-current/5 to-transparent px-4 py-3 border-t ${theme.border} ${theme.textColor}`}
+          >
+            <a
               href={getMapLink(day.address || day.venue || "", day.mapLink)}
               target="_blank"
               rel="noopener noreferrer"
@@ -489,3 +572,4 @@ const EventDayCard = ({
     </motion.div>
   );
 };
+
