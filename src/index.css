@@ -246,6 +246,63 @@
   .text-shadow-gold {
     text-shadow: 0 2px 10px hsl(var(--gold) / 0.3);
   }
+
+  .text-shadow-heading {
+    text-shadow: 
+      0 2px 4px hsl(var(--brown) / 0.3),
+      0 4px 8px hsl(var(--brown) / 0.2);
+  }
+
+  .text-glow-gold {
+    text-shadow: 
+      0 0 10px hsl(var(--gold) / 0.5),
+      0 0 20px hsl(var(--gold) / 0.3),
+      0 2px 4px hsl(var(--brown) / 0.2);
+  }
+
+  .text-glow-magenta {
+    text-shadow: 
+      0 0 10px hsl(var(--magenta) / 0.4),
+      0 0 20px hsl(var(--magenta) / 0.2),
+      0 2px 8px hsl(var(--brown) / 0.3);
+  }
+
+  /* Event theme colors */
+  .event-haldi {
+    --event-primary: 45 100% 50%;
+    --event-secondary: 45 90% 65%;
+    --event-bg: 45 80% 95%;
+  }
+
+  .event-mehndi {
+    --event-primary: 142 70% 35%;
+    --event-secondary: 142 60% 50%;
+    --event-bg: 142 50% 95%;
+  }
+
+  .event-ganesh {
+    --event-primary: 24 90% 50%;
+    --event-secondary: 24 80% 65%;
+    --event-bg: 24 70% 95%;
+  }
+
+  .event-baan {
+    --event-primary: 45 80% 40%;
+    --event-secondary: 45 70% 55%;
+    --event-bg: 45 60% 94%;
+  }
+
+  .event-sangeet {
+    --event-primary: 230 70% 35%;
+    --event-secondary: 230 60% 50%;
+    --event-bg: 230 50% 95%;
+  }
+
+  .event-barat {
+    --event-primary: 340 70% 30%;
+    --event-secondary: 340 60% 45%;
+    --event-bg: 340 50% 96%;
+  }
 }
 
 @layer utilities {

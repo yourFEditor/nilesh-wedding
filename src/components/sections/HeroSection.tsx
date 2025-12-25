@@ -31,14 +31,14 @@ export const HeroSection = ({
       {/* Floating Stars */}
       <FloatingStars />
 
-      {/* Left Decorative Border */}
-      <div className="absolute left-0 top-0 bottom-0 w-24 md:w-32 flex flex-col items-center justify-between py-10 opacity-60">
+      {/* Left Decorative Border - Hidden on mobile */}
+      <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-20 md:w-32 hidden sm:flex flex-col items-center justify-between py-10 opacity-60">
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
-          <LotusSVG className="w-12 h-12 md:w-16 md:h-16" />
+          <LotusSVG className="w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16" />
         </motion.div>
         <motion.div
           initial={{ opacity: 0, x: -50 }}
@@ -51,7 +51,7 @@ export const HeroSection = ({
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 1.1 }}
         >
-          <ElephantSVG className="w-20 h-20 md:w-28 md:h-28" />
+          <ElephantSVG className="w-14 h-14 sm:w-20 sm:h-20 md:w-28 md:h-28" />
         </motion.div>
         <motion.div
           initial={{ opacity: 0, x: -50 }}
@@ -64,18 +64,18 @@ export const HeroSection = ({
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 1.7 }}
         >
-          <LotusSVG className="w-12 h-12 md:w-16 md:h-16" />
+          <LotusSVG className="w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16" />
         </motion.div>
       </div>
 
-      {/* Right Decorative Border */}
-      <div className="absolute right-0 top-0 bottom-0 w-24 md:w-32 flex flex-col items-center justify-between py-10 opacity-60">
+      {/* Right Decorative Border - Hidden on mobile */}
+      <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-20 md:w-32 hidden sm:flex flex-col items-center justify-between py-10 opacity-60">
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
-          <LotusSVG className="w-12 h-12 md:w-16 md:h-16" />
+          <LotusSVG className="w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16" />
         </motion.div>
         <motion.div
           initial={{ opacity: 0, x: 50 }}
@@ -88,7 +88,7 @@ export const HeroSection = ({
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 1.1 }}
         >
-          <ElephantSVG className="w-20 h-20 md:w-28 md:h-28" flip />
+          <ElephantSVG className="w-14 h-14 sm:w-20 sm:h-20 md:w-28 md:h-28" flip />
         </motion.div>
         <motion.div
           initial={{ opacity: 0, x: 50 }}
@@ -101,21 +101,21 @@ export const HeroSection = ({
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 1.7 }}
         >
-          <LotusSVG className="w-12 h-12 md:w-16 md:h-16" />
+          <LotusSVG className="w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16" />
         </motion.div>
       </div>
 
-      <div className="relative z-20 text-center px-6 py-20 max-w-4xl mx-auto">
+      <div className="relative z-20 text-center px-4 sm:px-6 py-12 sm:py-16 md:py-20 max-w-4xl mx-auto">
         {/* Ganesh Icon */}
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="flex justify-center mb-6"
+          className="flex justify-center mb-4 sm:mb-6"
         >
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-radial from-gold/20 to-transparent rounded-full scale-150" />
-            <GaneshIcon className="w-24 h-24 md:w-32 md:h-32 relative" />
+            <GaneshIcon className="w-16 h-16 sm:w-20 sm:h-20 md:w-32 md:h-32 relative" />
           </div>
         </motion.div>
 
@@ -124,19 +124,19 @@ export const HeroSection = ({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="font-heading text-lg md:text-xl text-brown-light mb-2"
+          className="font-heading text-base sm:text-lg md:text-xl text-brown-light text-shadow-heading mb-2"
         >
           ॥ श्री गणेशाय नमः ॥
         </motion.p>
 
-        <Divider className="max-w-xs mx-auto mb-8" />
+        <Divider className="max-w-[200px] sm:max-w-xs mx-auto mb-6 sm:mb-8" />
 
         {/* Tagline */}
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="font-heading text-xl md:text-2xl tracking-[0.3em] text-gold-dark uppercase mb-8"
+          className="font-heading text-sm sm:text-lg md:text-2xl tracking-[0.15em] sm:tracking-[0.3em] text-gold-dark text-glow-gold uppercase mb-6 sm:mb-8"
         >
           {tagline}
         </motion.h2>
@@ -146,27 +146,27 @@ export const HeroSection = ({
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="mb-8"
+          className="mb-6 sm:mb-8"
         >
-          <h1 className="font-script text-6xl md:text-8xl lg:text-9xl text-magenta mb-4 drop-shadow-lg">
+          <h1 className="font-script text-5xl sm:text-6xl md:text-8xl lg:text-9xl text-magenta text-glow-magenta mb-2 sm:mb-4">
             {groomName}
           </h1>
-          <p className="font-heading text-2xl md:text-3xl text-gold tracking-[0.5em] my-4">
+          <p className="font-heading text-xl sm:text-2xl md:text-3xl text-gold text-glow-gold tracking-[0.3em] sm:tracking-[0.5em] my-2 sm:my-4">
             WEDS
           </p>
-          <h1 className="font-script text-6xl md:text-8xl lg:text-9xl text-magenta drop-shadow-lg">
+          <h1 className="font-script text-5xl sm:text-6xl md:text-8xl lg:text-9xl text-magenta text-glow-magenta">
             {brideName}
           </h1>
         </motion.div>
 
-        <Divider className="max-w-xs mx-auto mb-8" />
+        <Divider className="max-w-[200px] sm:max-w-xs mx-auto mb-6 sm:mb-8" />
 
         {/* Subtitle */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.95 }}
-          className="font-heading text-lg md:text-xl text-gold-dark tracking-widest uppercase mb-6"
+          className="font-heading text-xs sm:text-base md:text-xl text-gold-dark text-glow-gold tracking-wider sm:tracking-widest uppercase mb-4 sm:mb-6 px-2"
         >
           A Union of Two Souls • A Bond Between Two Families
         </motion.p>
@@ -178,7 +178,7 @@ export const HeroSection = ({
           transition={{ duration: 0.6, delay: 1 }}
           className="text-center"
         >
-          <p className="font-heading text-xl md:text-2xl text-brown font-semibold">
+          <p className="font-heading text-lg sm:text-xl md:text-2xl text-brown text-shadow-heading font-semibold">
             {weddingDate}
           </p>
         </motion.div>
