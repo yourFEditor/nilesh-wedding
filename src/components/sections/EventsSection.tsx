@@ -379,7 +379,7 @@ const EventDayCard = ({
     >
       {/* Card with themed styling */}
       <div
-        className={`relative bg-gradient-to-br ${theme.bg} backdrop-blur-sm rounded-xl overflow-hidden shadow-xl border-2 ${theme.border} h-full flex flex-col min-h-[260px] sm:min-h-[280px] md:min-h-[300px]`}
+        className={`relative bg-gradient-to-br ${theme.bg} backdrop-blur-sm rounded-xl overflow-hidden shadow-xl border-2 ${theme.border} h-full flex flex-col ${isSingleEvent ? 'min-h-[220px] sm:min-h-[230px] md:min-h-[240px]' : 'min-h-[260px] sm:min-h-[280px] md:min-h-[300px]'}`}
       >
         {/* Subtle background pattern */}
         <div className="absolute inset-0 opacity-[0.04] pointer-events-none">
