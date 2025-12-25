@@ -14,7 +14,113 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      events: {
+        Row: {
+          address: string | null
+          created_at: string
+          date: string
+          description: string | null
+          display_order: number | null
+          id: string
+          invitation_id: string
+          map_link: string | null
+          name: string
+          side: Database["public"]["Enums"]["event_side"]
+          time: string
+          updated_at: string
+          venue: string | null
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string
+          date: string
+          description?: string | null
+          display_order?: number | null
+          id?: string
+          invitation_id: string
+          map_link?: string | null
+          name: string
+          side?: Database["public"]["Enums"]["event_side"]
+          time: string
+          updated_at?: string
+          venue?: string | null
+        }
+        Update: {
+          address?: string | null
+          created_at?: string
+          date?: string
+          description?: string | null
+          display_order?: number | null
+          id?: string
+          invitation_id?: string
+          map_link?: string | null
+          name?: string
+          side?: Database["public"]["Enums"]["event_side"]
+          time?: string
+          updated_at?: string
+          venue?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "events_invitation_id_fkey"
+            columns: ["invitation_id"]
+            isOneToOne: false
+            referencedRelation: "invitations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      invitations: {
+        Row: {
+          bride_name: string
+          bride_parents: string | null
+          created_at: string
+          custom_message: string | null
+          groom_name: string
+          groom_parents: string | null
+          hero_image_url: string | null
+          id: string
+          updated_at: string
+          user_id: string | null
+          wedding_date: string | null
+          wedding_hashtag: string | null
+          whatsapp_bride: string | null
+          whatsapp_groom: string | null
+        }
+        Insert: {
+          bride_name?: string
+          bride_parents?: string | null
+          created_at?: string
+          custom_message?: string | null
+          groom_name?: string
+          groom_parents?: string | null
+          hero_image_url?: string | null
+          id?: string
+          updated_at?: string
+          user_id?: string | null
+          wedding_date?: string | null
+          wedding_hashtag?: string | null
+          whatsapp_bride?: string | null
+          whatsapp_groom?: string | null
+        }
+        Update: {
+          bride_name?: string
+          bride_parents?: string | null
+          created_at?: string
+          custom_message?: string | null
+          groom_name?: string
+          groom_parents?: string | null
+          hero_image_url?: string | null
+          id?: string
+          updated_at?: string
+          user_id?: string | null
+          wedding_date?: string | null
+          wedding_hashtag?: string | null
+          whatsapp_bride?: string | null
+          whatsapp_groom?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +129,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      event_side: "groom" | "bride" | "both"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +256,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      event_side: ["groom", "bride", "both"],
+    },
   },
 } as const
