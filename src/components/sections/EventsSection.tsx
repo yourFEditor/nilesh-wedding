@@ -362,8 +362,19 @@ const EventDayCard = ({
       className={`relative h-full ${isLargeCard ? 'lg:col-span-1' : ''}`}
     >
       {/* Card with themed styling */}
-      <div className={`relative bg-gradient-to-br ${theme.bg} backdrop-blur-sm rounded-xl overflow-hidden shadow-xl border-2 ${theme.border} h-full flex flex-col`}>
+      <div className={`relative bg-gradient-to-br ${theme.bg} backdrop-blur-sm rounded-xl overflow-hidden shadow-xl border-2 ${theme.border} h-full flex flex-col min-h-[320px]`}>
         
+        {/* Subtle background pattern */}
+        <div className="absolute inset-0 opacity-[0.04] pointer-events-none">
+          <div
+            className="w-full h-full"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L30 55 M5 30 L55 30' stroke='%23${theme.primary.replace('#', '')}' stroke-width='0.5' opacity='0.5'/%3E%3Ccircle cx='30' cy='30' r='20' stroke='%23${theme.primary.replace('#', '')}' stroke-width='0.3' fill='none'/%3E%3Ccircle cx='30' cy='30' r='10' stroke='%23${theme.primary.replace('#', '')}' stroke-width='0.3' fill='none'/%3E%3C/svg%3E")`,
+              backgroundSize: "60px 60px",
+            }}
+          />
+        </div>
+
         {/* Ornate corner decorations */}
         <OrnateCorner className={`absolute top-0 left-0 w-12 h-12 ${theme.textColor}`} rotate={0} />
         <OrnateCorner className={`absolute top-0 right-0 w-12 h-12 ${theme.textColor}`} rotate={90} />
@@ -397,7 +408,7 @@ const EventDayCard = ({
         </div>
 
         {/* Date */}
-        <div className={`px-4 py-3 text-center ${theme.textColor}`}>
+        <div className={`px-4 py-2 text-center ${theme.textColor}`}>
           <p className="font-heading text-base sm:text-lg font-semibold text-shadow-heading">
             {day.date}
           </p>
@@ -415,12 +426,12 @@ const EventDayCard = ({
         </div>
 
         {/* Events - for single event, just show time centered */}
-        <div className="p-4 flex-1 flex flex-col">
+        <div className="p-4 flex-1 flex flex-col justify-center">
           {isSingleEvent ? (
-            <div className="flex-1 flex items-center justify-center">
+            <div className="flex items-center justify-center">
               <div className={`flex items-center gap-2 ${theme.textColor}`}>
-                <Clock className="w-4 h-4" />
-                <span className="font-heading text-lg font-semibold">{day.events[0].time}</span>
+                <Clock className="w-5 h-5" />
+                <span className="font-heading text-xl font-semibold">{day.events[0].time}</span>
               </div>
             </div>
           ) : (
