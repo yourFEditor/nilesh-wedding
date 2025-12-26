@@ -410,9 +410,9 @@ const EventDayCard = ({
   const theme = getEventTheme(day.title, eventNames);
   const eventImage = getEventImage(day.title, eventNames);
 
-  // Height classes: increased to accommodate images properly
+  // Height classes: Main events have equal fixed height on desktop, auto on mobile
   const heightClass = isMainEvent
-    ? 'min-h-[380px] sm:min-h-[400px] md:min-h-[420px]' // Main events - taller
+    ? 'min-h-[380px] sm:min-h-[400px] md:h-[420px]' // Main events - fixed height on desktop for uniformity
     : 'min-h-[320px] sm:min-h-[340px] md:min-h-[360px]'; // Pre-events - increased to fit images
 
   // Main events get neon glow effect
