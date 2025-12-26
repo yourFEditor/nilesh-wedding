@@ -410,9 +410,9 @@ const EventDayCard = ({
   const theme = getEventTheme(day.title, eventNames);
   const eventImage = getEventImage(day.title, eventNames);
 
-  // Height classes: Main events have equal fixed height on desktop, auto on mobile
+  // Height classes: Main events have equal fixed height on desktop based on largest card
   const heightClass = isMainEvent
-    ? 'min-h-[380px] sm:min-h-[400px] md:h-[420px]' // Main events - fixed height on desktop for uniformity
+    ? 'min-h-[380px] sm:min-h-[400px] md:h-[480px]' // Main events - fixed height matching largest card (Lagan Laagi Re)
     : 'min-h-[320px] sm:min-h-[340px] md:min-h-[360px]'; // Pre-events - increased to fit images
 
   // Main events get neon glow effect
