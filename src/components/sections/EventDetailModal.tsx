@@ -1,5 +1,4 @@
-import * as React from "react";
-import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { X, Clock, Calendar, MapPin, ExternalLink } from "lucide-react";
 import {
   MarigoldSVG,
@@ -279,17 +278,6 @@ END:VCALENDAR`;
 export const EventDetailModal = ({ isOpen, onClose, day, theme }: EventDetailModalProps) => {
   const eventNames = day.events.map((e) => e.name);
   const eventImage = getEventImage(day.title, eventNames);
-  const [phase, setPhase] = React.useState<"image" | "card">("image");
-
-  React.useEffect(() => {
-    if (!isOpen) return;
-    setPhase("image");
-    // Longer delay for image to fully animate before card appears
-    const t = window.setTimeout(() => setPhase("card"), 650);
-    return () => window.clearTimeout(t);
-  }, [isOpen, day.title]);
-
-  const heroAlt = `${day.title} couple illustration`;
 
   return (
     <AnimatePresence mode="wait">
@@ -304,218 +292,156 @@ export const EventDetailModal = ({ isOpen, onClose, day, theme }: EventDetailMod
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 cursor-pointer"
           />
 
-          <LayoutGroup>
-            <AnimatePresence initial={false} mode="wait">
-              {phase === "image" ? (
-                <motion.div
-                  key="phase-image"
-                  className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
-                >
-                  <motion.div
-                    layoutId="event-modal-hero"
-                    initial={{ opacity: 0, y: 80, scale: 0.3 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 1 }}
-                    transition={{ 
-                      duration: 0.6, 
-                      ease: [0.22, 1, 0.36, 1] // Smooth ease-out
+          {/* Modal */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 30 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 30, transition: { duration: 0.2 } }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
+          >
+            <motion.div
+              className={`relative w-full max-w-lg max-h-[90vh] overflow-y-auto bg-gradient-to-br ${theme.bg} rounded-2xl shadow-2xl border-2 ${theme.border} pointer-events-auto scrollbar-hide`}
+              style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Floating illustrations */}
+              <div className="absolute top-4 left-4 opacity-30 pointer-events-none">
+                <FloatingDecoration delay={0}>
+                  {renderIllustration(theme.illustrations[0], theme.primary, "w-12 h-12")}
+                </FloatingDecoration>
+              </div>
+              <div className="absolute top-4 right-16 opacity-25 pointer-events-none">
+                <FloatingDecoration delay={0.5}>
+                  {renderIllustration(theme.illustrations[1] || theme.illustrations[0], theme.secondary, "w-10 h-10")}
+                </FloatingDecoration>
+              </div>
+              <div className="absolute bottom-4 left-4 opacity-25 pointer-events-none">
+                <FloatingDecoration delay={1}>
+                  {renderIllustration(theme.illustrations[2] || theme.illustrations[0], theme.primary, "w-10 h-10")}
+                </FloatingDecoration>
+              </div>
+              <div className="absolute bottom-4 right-4 opacity-30 pointer-events-none">
+                <FloatingDecoration delay={1.5}>
+                  {renderIllustration(theme.illustrations[0], theme.secondary, "w-12 h-12")}
+                </FloatingDecoration>
+              </div>
+
+              {/* Close button */}
+              <button
+                onClick={onClose}
+                className={`absolute top-4 right-4 z-10 p-2 rounded-full bg-white/80 hover:bg-white ${theme.textColor} transition-all duration-200 shadow-lg hover:scale-110`}
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              {/* Header */}
+              <div className={`${theme.headerBg} py-6 px-8 text-center relative overflow-hidden`}>
+                {/* Background pattern */}
+                <div className="absolute inset-0 opacity-10">
+                  <div
+                    className="w-full h-full"
+                    style={{
+                      backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='15' stroke='white' stroke-width='0.5' fill='none'/%3E%3C/svg%3E")`,
+                      backgroundSize: "40px 40px",
                     }}
-                    className="w-48 h-48 sm:w-56 sm:h-56 drop-shadow-2xl"
-                  >
-                    {eventImage ? (
-                      <img
-                        src={eventImage}
-                        alt={heroAlt}
-                        className="w-full h-full object-contain"
-                        loading="eager"
-                      />
-                    ) : (
-                      <CoupleIllustration theme={theme.theme} className="w-full h-full" />
-                    )}
-                  </motion.div>
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="phase-card"
-                  initial={{ opacity: 0, scale: 0.96, y: 30, filter: "blur(8px)" }}
-                  animate={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
-                  exit={{ opacity: 0, scale: 0.9, y: 30, filter: "blur(4px)", transition: { duration: 0.25, ease: "easeInOut" } }}
-                  transition={{ 
-                    duration: 0.5, 
-                    ease: [0.22, 1, 0.36, 1],
-                    filter: { duration: 0.4 }
-                  }}
-                  className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
+                  />
+                </div>
+                <h2 className="font-script text-3xl sm:text-4xl text-white drop-shadow-lg relative z-10">{day.title}</h2>
+                {day.subtitle && (
+                  <p className="text-white/90 mt-1 font-body text-sm relative z-10">{day.subtitle}</p>
+                )}
+              </div>
+
+              {/* Content */}
+              <div className="p-4 space-y-3 relative">
+                {/* Date */}
+                <div className={`flex items-center justify-center gap-3 ${theme.textColor}`}>
+                  <Calendar className="w-5 h-5" />
+                  <span className="font-heading text-lg font-semibold">{day.date}</span>
+                </div>
+
+                {/* Hero image */}
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.1, duration: 0.4, ease: "easeOut" }}
+                  className="flex justify-center py-2"
                 >
-                  <motion.div
-                    initial={{ filter: "blur(6px)" }}
-                    animate={{ filter: "blur(0px)" }}
-                    transition={{ duration: 0.35, delay: 0.1 }}
-                    className={`relative w-full max-w-lg max-h-[90vh] overflow-y-auto bg-gradient-to-br ${theme.bg} rounded-2xl shadow-2xl border-2 ${theme.border} pointer-events-auto scrollbar-hide`}
-                    style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    {/* Floating illustrations */}
-                    <div className="absolute top-4 left-4 opacity-30 pointer-events-none">
-                      <FloatingDecoration delay={0}>
-                        {renderIllustration(theme.illustrations[0], theme.primary, "w-12 h-12")}
-                      </FloatingDecoration>
-                    </div>
-                    <div className="absolute top-4 right-16 opacity-25 pointer-events-none">
-                      <FloatingDecoration delay={0.5}>
-                        {renderIllustration(theme.illustrations[1] || theme.illustrations[0], theme.secondary, "w-10 h-10")}
-                      </FloatingDecoration>
-                    </div>
-                    <div className="absolute bottom-4 left-4 opacity-25 pointer-events-none">
-                      <FloatingDecoration delay={1}>
-                        {renderIllustration(theme.illustrations[2] || theme.illustrations[0], theme.primary, "w-10 h-10")}
-                      </FloatingDecoration>
-                    </div>
-                    <div className="absolute bottom-4 right-4 opacity-30 pointer-events-none">
-                      <FloatingDecoration delay={1.5}>
-                        {renderIllustration(theme.illustrations[0], theme.secondary, "w-12 h-12")}
-                      </FloatingDecoration>
-                    </div>
-
-                    {/* Close button */}
-                    <button
-                      onClick={onClose}
-                      className={`absolute top-4 right-4 z-10 p-2 rounded-full bg-white/80 hover:bg-white ${theme.textColor} transition-all duration-200 shadow-lg hover:scale-110`}
-                    >
-                      <X className="w-5 h-5" />
-                    </button>
-
-                    {/* Header */}
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.1 }}
-                      className={`${theme.headerBg} py-6 px-8 text-center relative overflow-hidden`}
-                    >
-                      {/* Background pattern */}
-                      <div className="absolute inset-0 opacity-10">
-                        <div
-                          className="w-full h-full"
-                          style={{
-                            backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='15' stroke='white' stroke-width='0.5' fill='none'/%3E%3C/svg%3E")`,
-                            backgroundSize: "40px 40px",
-                          }}
-                        />
-                      </div>
-                      <h2 className="font-script text-3xl sm:text-4xl text-white drop-shadow-lg relative z-10">{day.title}</h2>
-                      {day.subtitle && (
-                        <p className="text-white/90 mt-1 font-body text-sm relative z-10">{day.subtitle}</p>
-                      )}
-                    </motion.div>
-
-                    {/* Content */}
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.15 }}
-                      className="p-4 space-y-3 relative"
-                    >
-                      {/* Date */}
-                      <div className={`flex items-center justify-center gap-3 ${theme.textColor}`}>
-                        <Calendar className="w-5 h-5" />
-                        <span className="font-heading text-lg font-semibold">{day.date}</span>
-                      </div>
-
-                      {/* Hero image docks into the card (no overlap) */}
-                      <div className="flex justify-center py-2">
-                        <motion.div
-                          layoutId="event-modal-hero"
-                          className="w-44 h-44 sm:w-52 sm:h-52 drop-shadow-lg"
-                        >
-                          {eventImage ? (
-                            <img
-                              src={eventImage}
-                              alt={heroAlt}
-                              className="w-full h-full object-contain"
-                              loading="lazy"
-                            />
-                          ) : (
-                            <CoupleIllustration theme={theme.theme} className="w-full h-full" />
-                          )}
-                        </motion.div>
-                      </div>
-
-                      {/* Events List */}
-                      <div className="space-y-2">
-                        <h3
-                          className={`font-heading text-xs uppercase tracking-widest ${theme.textColor} opacity-70 text-center`}
-                        >
-                          Schedule
-                        </h3>
-                        <div className="space-y-2">
-                          {day.events.map((event, idx) => (
-                            <motion.div
-                              key={idx}
-                              initial={{ opacity: 0, x: -20 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: 0.1 * idx }}
-                              className={`bg-white/80 rounded-lg p-3 border ${theme.border}`}
-                            >
-                              <div className="flex items-center justify-between">
-                                <h4 className={`font-heading text-sm font-semibold ${theme.textColor}`}>{event.name}</h4>
-                                <div className={`flex items-center gap-1.5 ${theme.textColor}`}>
-                                  <Clock className="w-3.5 h-3.5" />
-                                  <span className="font-body text-xs font-medium">{event.time}</span>
-                                </div>
-                              </div>
-                              {event.description && (
-                                <p className={`mt-1 font-body text-xs ${theme.textColor} opacity-80`}>{event.description}</p>
-                              )}
-                            </motion.div>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Venue */}
-                      {(day.venue || day.address) && (
-                        <div className={`mt-3 pt-3 border-t ${theme.border}`}>
-                          <h3
-                            className={`font-heading text-xs uppercase tracking-widest ${theme.textColor} opacity-70 text-center mb-2`}
-                          >
-                            Venue
-                          </h3>
-                          <a
-                            href={getMapLink(day.address || day.venue || "", day.mapLink)}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={`block bg-white/80 rounded-lg p-3 border ${theme.border} hover:bg-white transition-colors group`}
-                          >
-                            <div className="flex items-start gap-2">
-                              <MapPin className={`w-4 h-4 ${theme.textColor} flex-shrink-0 mt-0.5`} />
-                              <div className="flex-1">
-                                {day.venue && (
-                                  <p
-                                    className={`font-heading text-lg sm:text-xl font-bold ${theme.textColor} group-hover:underline`}
-                                  >
-                                    {day.venue}
-                                  </p>
-                                )}
-                                {day.address && (
-                                  <p
-                                    className={`font-body text-xs ${theme.textColor} opacity-80 mt-0.5 group-hover:underline`}
-                                  >
-                                    {day.address}
-                                  </p>
-                                )}
-                              </div>
-                              <ExternalLink
-                                className={`w-3.5 h-3.5 ${theme.textColor} opacity-60 group-hover:opacity-100 transition-opacity`}
-                              />
-                            </div>
-                          </a>
-                        </div>
-                      )}
-                    </motion.div>
-                  </motion.div>
+                  {eventImage ? (
+                    <img
+                      src={eventImage}
+                      alt={day.title}
+                      className="w-44 h-44 sm:w-52 sm:h-52 object-contain drop-shadow-lg"
+                    />
+                  ) : (
+                    <CoupleIllustration theme={theme.theme} className="w-44 h-44 sm:w-52 sm:h-52" />
+                  )}
                 </motion.div>
-              )}
-            </AnimatePresence>
-          </LayoutGroup>
+
+                {/* Events List */}
+                <div className="space-y-2">
+                  <h3 className={`font-heading text-xs uppercase tracking-widest ${theme.textColor} opacity-70 text-center`}>
+                    Schedule
+                  </h3>
+                  <div className="space-y-2">
+                    {day.events.map((event, idx) => (
+                      <motion.div
+                        key={idx}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.15 + 0.08 * idx }}
+                        className={`bg-white/80 rounded-lg p-3 border ${theme.border}`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <h4 className={`font-heading text-sm font-semibold ${theme.textColor}`}>{event.name}</h4>
+                          <div className={`flex items-center gap-1.5 ${theme.textColor}`}>
+                            <Clock className="w-3.5 h-3.5" />
+                            <span className="font-body text-xs font-medium">{event.time}</span>
+                          </div>
+                        </div>
+                        {event.description && (
+                          <p className={`mt-1 font-body text-xs ${theme.textColor} opacity-80`}>{event.description}</p>
+                        )}
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Venue */}
+                {(day.venue || day.address) && (
+                  <div className={`mt-3 pt-3 border-t ${theme.border}`}>
+                    <h3 className={`font-heading text-xs uppercase tracking-widest ${theme.textColor} opacity-70 text-center mb-2`}>
+                      Venue
+                    </h3>
+                    <a
+                      href={getMapLink(day.address || day.venue || "", day.mapLink)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`block bg-white/80 rounded-lg p-3 border ${theme.border} hover:bg-white transition-colors group`}
+                    >
+                      <div className="flex items-start gap-2">
+                        <MapPin className={`w-4 h-4 ${theme.textColor} flex-shrink-0 mt-0.5`} />
+                        <div className="flex-1">
+                          {day.venue && (
+                            <p className={`font-heading text-lg sm:text-xl font-bold ${theme.textColor} group-hover:underline`}>
+                              {day.venue}
+                            </p>
+                          )}
+                          {day.address && (
+                            <p className={`font-body text-xs ${theme.textColor} opacity-80 mt-0.5 group-hover:underline`}>
+                              {day.address}
+                            </p>
+                          )}
+                        </div>
+                        <ExternalLink className={`w-3.5 h-3.5 ${theme.textColor} opacity-60 group-hover:opacity-100 transition-opacity`} />
+                      </div>
+                    </a>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
         </>
       )}
     </AnimatePresence>
