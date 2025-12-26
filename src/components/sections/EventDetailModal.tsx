@@ -369,12 +369,12 @@ export const EventDetailModal = ({ isOpen, onClose, day, theme }: EventDetailMod
                 </div>
 
                 {/* Event Image or Couple Illustration */}
-                <div className="flex justify-center py-1 overflow-hidden -my-2">
+                <div className="flex justify-center py-2">
                   {eventImage ? (
                     <img 
                       src={eventImage} 
                       alt={day.title}
-                      className="w-48 h-48 sm:w-56 sm:h-56 object-contain drop-shadow-lg scale-150"
+                      className="w-44 h-44 sm:w-52 sm:h-52 object-contain drop-shadow-lg"
                     />
                   ) : (
                     <CoupleIllustration theme={theme.theme} className="w-32 h-40" />
