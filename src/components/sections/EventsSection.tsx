@@ -26,6 +26,7 @@ import sakdiRitual from "@/assets/sakdi-ritual.png";
 import haldiCouple from "@/assets/haldi-couple.png";
 import cocktailCouple from "@/assets/cocktail-couple.png";
 import weddingCouple from "@/assets/wedding-couple.png";
+import laganLaagiCouple from "@/assets/lagan-laagi-couple.png";
 
 // Map event themes to their images
 const getEventImage = (title: string, eventNames: string[]) => {
@@ -48,7 +49,7 @@ const getEventImage = (title: string, eventNames: string[]) => {
     return cocktailCouple;
   }
   if (combined.includes("lagan") || combined.includes("barat") || combined.includes("wedding") || combined.includes("panigrahan")) {
-    return weddingCouple;
+    return laganLaagiCouple;
   }
   return null;
 };
