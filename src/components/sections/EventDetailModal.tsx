@@ -430,7 +430,7 @@ export const EventDetailModal = ({ isOpen, onClose, day, theme }: EventDetailMod
                         <MapPin className={`w-4 h-4 ${theme.textColor} flex-shrink-0 mt-0.5`} />
                         <div className="flex-1">
                           {day.venue && (
-                            <p className={`font-heading text-sm font-semibold ${theme.textColor} group-hover:underline`}>
+                            <p className={`font-heading text-lg sm:text-xl font-bold ${theme.textColor} group-hover:underline`}>
                               {day.venue}
                             </p>
                           )}
