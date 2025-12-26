@@ -27,14 +27,15 @@ import weddingCouple from "@/assets/wedding-couple.png";
 const getEventImage = (title: string, eventNames: string[]) => {
   const combined = (title + " " + eventNames.join(" ")).toLowerCase();
   
+  // Check sakdi FIRST since "Sakdi Vinayak" contains both sakdi and vinayak
+  if (combined.includes("sakdi")) {
+    return sakdiRitual;
+  }
   if (combined.includes("ganesh") || combined.includes("sthabpna") || combined.includes("sthapana") || combined.includes("vinayak")) {
     return ganeshIdol;
   }
   if (combined.includes("baan") || combined.includes("ban")) {
     return baanThali;
-  }
-  if (combined.includes("sakdi")) {
-    return sakdiRitual;
   }
   if (combined.includes("haldi")) {
     return haldiCouple;
