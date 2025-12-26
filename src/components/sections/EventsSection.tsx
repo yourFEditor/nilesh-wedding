@@ -499,11 +499,11 @@ const EventDayCard = ({
 
         {/* Event Image - positioned below header */}
         {eventImage && (
-          <div className={`flex items-center justify-center flex-1 z-10 ${!isSingleEvent ? 'py-3 sm:py-4' : ''}`}>
+          <div className={`flex items-center justify-center flex-1 z-10 ${!isSingleEvent ? 'py-4 sm:py-5' : ''}`}>
             <img 
               src={eventImage} 
               alt={day.title}
-              className="w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 object-contain drop-shadow-lg"
+              className={`object-contain drop-shadow-lg ${!isSingleEvent ? 'w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36' : 'w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40'}`}
             />
           </div>
         )}
