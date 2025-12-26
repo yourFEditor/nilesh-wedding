@@ -76,7 +76,7 @@ interface EventsSectionProps {
   days: EventDay[];
 }
 
-// Get event theme based on event name
+// Get event theme based on event name - Pastel theme with dark text for better contrast
 const getEventTheme = (title: string, eventNames: string[]) => {
   const titleLower = title.toLowerCase();
   const eventsLower = eventNames.map(n => n.toLowerCase()).join(" ");
@@ -85,26 +85,26 @@ const getEventTheme = (title: string, eventNames: string[]) => {
   if (combined.includes("haldi")) {
     return {
       theme: "haldi",
-      primary: "#eab308",
-      secondary: "#facc15",
-      bg: "from-yellow-50 via-yellow-100/50 to-amber-50",
-      border: "border-yellow-400/40",
-      headerBg: "bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-400",
-      textColor: "text-amber-800",
-      iconColor: "#ca8a04",
+      primary: "#d97706",
+      secondary: "#f59e0b",
+      bg: "from-amber-50/80 via-yellow-50/60 to-orange-50/40",
+      border: "border-amber-300/50",
+      headerBg: "bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500",
+      textColor: "text-amber-900",
+      iconColor: "#b45309",
       illustrations: ["marigold", "turmeric", "kalash"],
     };
   }
   if (combined.includes("mehndi") || combined.includes("mehendi")) {
     return {
       theme: "mehndi",
-      primary: "#16a34a",
-      secondary: "#22c55e",
-      bg: "from-green-50 via-emerald-50/50 to-green-100",
-      border: "border-green-400/40",
-      headerBg: "bg-gradient-to-r from-green-500 via-emerald-600 to-green-500",
-      textColor: "text-green-800",
-      iconColor: "#15803d",
+      primary: "#059669",
+      secondary: "#10b981",
+      bg: "from-emerald-50/80 via-green-50/60 to-teal-50/40",
+      border: "border-emerald-300/50",
+      headerBg: "bg-gradient-to-r from-emerald-500 via-green-500 to-emerald-500",
+      textColor: "text-emerald-900",
+      iconColor: "#047857",
       illustrations: ["mehendi", "marigold", "kalash"],
     };
   }
@@ -113,10 +113,10 @@ const getEventTheme = (title: string, eventNames: string[]) => {
       theme: "ganesh",
       primary: "#ea580c",
       secondary: "#f97316",
-      bg: "from-orange-50 via-orange-100/50 to-amber-50",
-      border: "border-orange-400/40",
-      headerBg: "bg-gradient-to-r from-orange-500 via-amber-600 to-orange-500",
-      textColor: "text-orange-800",
+      bg: "from-orange-50/80 via-amber-50/60 to-yellow-50/40",
+      border: "border-orange-300/50",
+      headerBg: "bg-gradient-to-r from-orange-500 via-amber-500 to-orange-500",
+      textColor: "text-orange-900",
       iconColor: "#c2410c",
       illustrations: ["ganesh", "kalash", "marigold"],
     };
@@ -124,52 +124,52 @@ const getEventTheme = (title: string, eventNames: string[]) => {
   if (combined.includes("baan") || combined.includes("ban")) {
     return {
       theme: "baan",
-      primary: "#ca8a04",
-      secondary: "#eab308",
-      bg: "from-amber-50 via-yellow-50/50 to-orange-50",
-      border: "border-amber-500/40",
-      headerBg: "bg-gradient-to-r from-amber-500 via-yellow-600 to-amber-500",
-      textColor: "text-amber-900",
-      iconColor: "#a16207",
+      primary: "#b45309",
+      secondary: "#d97706",
+      bg: "from-yellow-50/80 via-amber-50/60 to-orange-50/40",
+      border: "border-yellow-300/50",
+      headerBg: "bg-gradient-to-r from-yellow-500 via-amber-500 to-yellow-500",
+      textColor: "text-yellow-900",
+      iconColor: "#92400e",
       illustrations: ["turmeric", "kalash", "marigold"],
     };
   }
   if (combined.includes("sangeet") || combined.includes("music") || combined.includes("dance") || combined.includes("camera") || combined.includes("lights")) {
     return {
       theme: "sangeet",
-      primary: "#1e40af",
+      primary: "#2563eb",
       secondary: "#3b82f6",
-      bg: "from-blue-50 via-indigo-50/50 to-blue-100",
-      border: "border-blue-400/40",
-      headerBg: "bg-gradient-to-r from-blue-600 via-indigo-700 to-blue-600",
+      bg: "from-blue-50/80 via-indigo-50/60 to-violet-50/40",
+      border: "border-blue-300/50",
+      headerBg: "bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-500",
       textColor: "text-blue-900",
-      iconColor: "#1e3a8a",
+      iconColor: "#1d4ed8",
       illustrations: ["filmreel", "camera", "spotlight", "music", "dholak"],
     };
   }
   if (combined.includes("barat") || combined.includes("nikasi") || combined.includes("lagan") || combined.includes("panigrahan") || combined.includes("wedding")) {
     return {
       theme: "barat",
-      primary: "#9f1239",
+      primary: "#be123c",
       secondary: "#e11d48",
-      bg: "from-rose-50 via-pink-50/50 to-rose-100",
-      border: "border-rose-400/40",
-      headerBg: "bg-gradient-to-r from-rose-600 via-pink-700 to-rose-600",
+      bg: "from-rose-50/80 via-pink-50/60 to-red-50/40",
+      border: "border-rose-300/50",
+      headerBg: "bg-gradient-to-r from-rose-500 via-pink-500 to-rose-500",
       textColor: "text-rose-900",
-      iconColor: "#881337",
+      iconColor: "#9f1239",
       illustrations: ["horse", "kalash", "marigold", "dholak"],
     };
   }
-  // Default - gold/traditional
+  // Default - warm coral/traditional
   return {
     theme: "default",
-    primary: "#b45309",
-    secondary: "#f59e0b",
-    bg: "from-cream via-ivory to-cream-dark",
-    border: "border-gold/40",
-    headerBg: "bg-gradient-to-r from-amber-600 via-yellow-700 to-amber-600",
-    textColor: "text-brown",
-    iconColor: "#b45309",
+    primary: "#c2410c",
+    secondary: "#ea580c",
+    bg: "from-orange-50/80 via-amber-50/60 to-yellow-50/40",
+    border: "border-orange-300/50",
+    headerBg: "bg-gradient-to-r from-orange-500 via-amber-500 to-orange-500",
+    textColor: "text-orange-900",
+    iconColor: "#9a3412",
     illustrations: ["kalash", "marigold", "ganesh"],
   };
 };
@@ -409,10 +409,10 @@ const EventDayCard = ({
   const theme = getEventTheme(day.title, eventNames);
   const eventImage = getEventImage(day.title, eventNames);
 
-  // Height classes: top 3 (pre-events) = compact fixed height, bottom 3 (main events) = taller with highlight
+  // Height classes: increased to accommodate images properly
   const heightClass = isMainEvent
-    ? 'min-h-[280px] sm:min-h-[300px] md:min-h-[320px]' // Main events - taller
-    : 'h-[200px] sm:h-[210px] md:h-[220px]'; // Pre-events - compact fixed height
+    ? 'min-h-[380px] sm:min-h-[400px] md:min-h-[420px]' // Main events - taller
+    : 'min-h-[320px] sm:min-h-[340px] md:min-h-[360px]'; // Pre-events - increased to fit images
 
   // Main events get neon glow effect
   const neonGlowStyle = isMainEvent
@@ -487,13 +487,13 @@ const EventDayCard = ({
           flip
         />
 
-        {/* Event Image - centered and prominent */}
+        {/* Event Image - positioned below header */}
         {eventImage && (
-          <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
+          <div className="flex items-center justify-center py-2 z-10">
             <img 
               src={eventImage} 
               alt={day.title}
-              className="w-28 h-28 sm:w-32 sm:h-32 md:w-40 md:h-40 object-contain drop-shadow-xl"
+              className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 object-contain drop-shadow-lg"
             />
           </div>
         )}
