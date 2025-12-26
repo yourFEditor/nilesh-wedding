@@ -131,7 +131,7 @@ export const RSVPSection = ({
             )}
 
             {/* Awaiting Eyes & Maternal */}
-            <div className="flex flex-col md:flex-row justify-center items-start gap-8 mt-8">
+            <div className="flex flex-col md:flex-row justify-center items-start gap-12 md:gap-20 mt-8 px-4 md:px-12">
               {awaitingEyes && awaitingEyes.length > 0 && (
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
