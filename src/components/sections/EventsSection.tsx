@@ -257,7 +257,7 @@ const RajasthaniArchHeader = ({
     
     {/* Title content positioned in header bar */}
     <div className={`absolute inset-x-0 top-1/2 -translate-y-1/2 ${headerBg} mx-4 sm:mx-8 py-2 px-4 rounded-full shadow-lg`}>
-      <h3 className={`font-script ${isSingleEvent ? 'text-lg sm:text-xl md:text-2xl' : 'text-xl sm:text-2xl md:text-3xl'} text-white text-center text-shadow-heading leading-tight drop-shadow-lg`}>
+      <h3 className="font-script text-lg sm:text-xl md:text-2xl text-white text-center text-shadow-heading leading-tight drop-shadow-lg">
         {title}
       </h3>
     </div>
