@@ -349,26 +349,15 @@ export const EventsSection = ({ days }: EventsSectionProps) => {
       </motion.div>
 
       <div className="container max-w-6xl mx-auto px-3 sm:px-4 relative z-10">
-        {/* Responsive grid; when last row has a single card, let it span full width to avoid empty space */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        {/* Responsive grid with centered last row */}
+        <div className="flex flex-wrap justify-center gap-4 md:gap-6">
           {days.map((day, dayIndex) => {
             const total = days.length;
-            const isLast = dayIndex === total - 1;
 
             const isSingleEvent = day.events.length === 1;
             // First 3 cards (index 0-2) are pre-events, last 3 (index 3-5) are main events
             const isMainEvent = dayIndex >= 3;
             const isLargeCard = day.events.length > 2 || Boolean(day.subtitle);
-
-            const mdSingleLast = total % 2 === 1 && isLast;
-            const lgSingleLast = total % 3 === 1 && isLast;
-
-            const spanClass = [
-              mdSingleLast ? "md:col-span-2 md:max-w-2xl md:mx-auto" : "",
-              lgSingleLast ? "lg:col-span-3 lg:max-w-4xl lg:mx-auto" : "",
-            ]
-              .filter(Boolean)
-              .join(" ");
 
             return (
               <EventDayCard
@@ -378,7 +367,7 @@ export const EventsSection = ({ days }: EventsSectionProps) => {
                 isSingleEvent={isSingleEvent}
                 isLargeCard={isLargeCard}
                 isMainEvent={isMainEvent}
-                layoutClass={spanClass}
+                layoutClass="w-full md:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]"
               />
             );
           })}
