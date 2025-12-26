@@ -292,17 +292,106 @@ export const EventDetailModal = ({ isOpen, onClose, day, theme }: EventDetailMod
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 cursor-pointer"
           />
 
-          {/* Modal with enhanced exit animation */}
+          {/* Floating image that appears first */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.85, y: 30 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
+            initial={{ opacity: 0, y: 100, scale: 0.5 }}
+            animate={{ 
+              opacity: 1, 
+              y: 0, 
+              scale: 1,
+              transition: { 
+                duration: 0.5, 
+                ease: [0.34, 1.56, 0.64, 1] // Spring-like bounce
+              }
+            }}
             exit={{ 
               opacity: 0, 
-              scale: 0.85, 
+              y: 50, 
+              scale: 0.5,
+              transition: { duration: 0.2, ease: "easeIn" }
+            }}
+            className="fixed inset-0 z-[60] flex items-center justify-center pointer-events-none"
+          >
+            <motion.div
+              initial={{ y: 0 }}
+              animate={{ 
+                y: -80,
+                transition: { 
+                  delay: 0.4, 
+                  duration: 0.4, 
+                  ease: "easeOut" 
+                }
+              }}
+              className="relative"
+            >
+              {eventImage ? (
+                <motion.img 
+                  src={eventImage} 
+                  alt={day.title}
+                  className="w-40 h-40 sm:w-48 sm:h-48 object-contain drop-shadow-2xl"
+                  animate={{
+                    y: [0, -8, 0],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 0.8,
+                  }}
+                />
+              ) : (
+                <motion.div
+                  animate={{
+                    y: [0, -8, 0],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 0.8,
+                  }}
+                >
+                  <CoupleIllustration theme={theme.theme} className="w-32 h-40 drop-shadow-2xl" />
+                </motion.div>
+              )}
+              {/* Glow effect behind the image */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ 
+                  opacity: [0.3, 0.6, 0.3], 
+                  scale: [0.9, 1.1, 0.9],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="absolute inset-0 -z-10 rounded-full blur-3xl"
+                style={{ backgroundColor: theme.primary, opacity: 0.4 }}
+              />
+            </motion.div>
+          </motion.div>
+
+          {/* Modal card that slides up after image */}
+          <motion.div
+            initial={{ opacity: 0, y: 100 }}
+            animate={{ 
+              opacity: 1, 
+              y: 0,
+              transition: { 
+                delay: 0.5, 
+                duration: 0.5, 
+                type: "spring", 
+                damping: 25, 
+                stiffness: 200 
+              }
+            }}
+            exit={{ 
+              opacity: 0, 
+              scale: 0.9, 
               y: 30,
               transition: { duration: 0.25, ease: "easeInOut" }
             }}
-            transition={{ type: "spring", damping: 25, stiffness: 300 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
           >
             <motion.div
@@ -368,18 +457,8 @@ export const EventDetailModal = ({ isOpen, onClose, day, theme }: EventDetailMod
                   <span className="font-heading text-lg font-semibold">{day.date}</span>
                 </div>
 
-                {/* Event Image or Couple Illustration */}
-                <div className="flex justify-center py-2">
-                  {eventImage ? (
-                    <img 
-                      src={eventImage} 
-                      alt={day.title}
-                      className="w-44 h-44 sm:w-52 sm:h-52 object-contain drop-shadow-lg"
-                    />
-                  ) : (
-                    <CoupleIllustration theme={theme.theme} className="w-32 h-40" />
-                  )}
-                </div>
+                {/* Spacer for the floating image */}
+                <div className="h-16 sm:h-20" />
 
                 {/* Events List */}
                 <div className="space-y-2">
