@@ -296,10 +296,10 @@ export const EventDetailModal = ({ isOpen, onClose, day, theme }: EventDetailMod
           <motion.div
             className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
           >
-            <div className="relative w-full max-w-lg pointer-events-auto">
-              {/* Image that floats up first - positioned at top of card */}
+            <div className="relative w-full max-w-lg flex flex-col items-center pointer-events-auto">
+              {/* Image that floats up first - positioned above card */}
               <motion.div
-                initial={{ opacity: 0, y: 100, scale: 0.4 }}
+                initial={{ opacity: 0, y: 80, scale: 0.4 }}
                 animate={{ 
                   opacity: 1, 
                   y: 0, 
@@ -307,7 +307,7 @@ export const EventDetailModal = ({ isOpen, onClose, day, theme }: EventDetailMod
                 }}
                 exit={{ 
                   opacity: 0, 
-                  y: 50, 
+                  y: 40, 
                   scale: 0.5,
                   transition: { duration: 0.2 }
                 }}
@@ -315,7 +315,7 @@ export const EventDetailModal = ({ isOpen, onClose, day, theme }: EventDetailMod
                   duration: 0.5, 
                   ease: [0.34, 1.56, 0.64, 1]
                 }}
-                className="absolute left-1/2 -translate-x-1/2 -top-16 sm:-top-20 z-20"
+                className="relative z-20 mb-[-40px] sm:mb-[-50px]"
               >
                 {eventImage ? (
                   <motion.img 
@@ -370,7 +370,7 @@ export const EventDetailModal = ({ isOpen, onClose, day, theme }: EventDetailMod
                   damping: 25, 
                   stiffness: 200 
                 }}
-                className={`relative w-full max-h-[75vh] overflow-y-auto bg-gradient-to-br ${theme.bg} rounded-2xl shadow-2xl border-2 ${theme.border} scrollbar-hide mt-16 sm:mt-20`}
+                className={`relative w-full max-h-[70vh] overflow-y-auto bg-gradient-to-br ${theme.bg} rounded-2xl shadow-2xl border-2 ${theme.border} scrollbar-hide`}
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 onClick={(e) => e.stopPropagation()}
               >
