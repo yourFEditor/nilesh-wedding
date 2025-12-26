@@ -137,11 +137,12 @@ export const RSVPSection = ({
                   initial={{ opacity: 0, y: 20 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ delay: 0.7 }}
+                  className="md:mr-auto md:max-w-md"
                 >
-                  <h3 className="font-heading text-lg text-gold font-semibold mb-4 uppercase tracking-wider text-center">
+                  <h3 className="font-heading text-lg text-gold font-semibold mb-4 uppercase tracking-wider text-center md:text-left">
                     Awaiting Eyes
                   </h3>
-                  <p className="font-body text-brown text-center text-sm">
+                  <p className="font-body text-brown text-center md:text-left text-sm">
                     {awaitingEyes.join(", ")}
                   </p>
                 </motion.div>
@@ -152,7 +153,7 @@ export const RSVPSection = ({
                   initial={{ opacity: 0, y: 20 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ delay: 0.8 }}
-                  className="text-center"
+                  className="text-center md:text-right md:ml-auto md:max-w-[260px]"
                 >
                   <h3 className="font-heading text-lg text-gold font-semibold mb-4 uppercase tracking-wider">
                     {maternal.title}
