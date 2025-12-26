@@ -284,7 +284,8 @@ export const EventDetailModal = ({ isOpen, onClose, day, theme }: EventDetailMod
   React.useEffect(() => {
     if (!isOpen) return;
     setPhase("image");
-    const t = window.setTimeout(() => setPhase("card"), 420);
+    // Longer delay for image to fully animate before card appears
+    const t = window.setTimeout(() => setPhase("card"), 650);
     return () => window.clearTimeout(t);
   }, [isOpen, day.title]);
 
@@ -312,11 +313,14 @@ export const EventDetailModal = ({ isOpen, onClose, day, theme }: EventDetailMod
                 >
                   <motion.div
                     layoutId="event-modal-hero"
-                    initial={{ opacity: 0, y: 60, scale: 0.4 }}
+                    initial={{ opacity: 0, y: 80, scale: 0.3 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 30, scale: 0.9, transition: { duration: 0.2 } }}
-                    transition={{ duration: 0.5, ease: [0.34, 1.56, 0.64, 1] }}
-                    className="w-52 h-52 sm:w-60 sm:h-60 drop-shadow-2xl"
+                    exit={{ opacity: 1 }}
+                    transition={{ 
+                      duration: 0.6, 
+                      ease: [0.22, 1, 0.36, 1] // Smooth ease-out
+                    }}
+                    className="w-48 h-48 sm:w-56 sm:h-56 drop-shadow-2xl"
                   >
                     {eventImage ? (
                       <img
@@ -333,13 +337,20 @@ export const EventDetailModal = ({ isOpen, onClose, day, theme }: EventDetailMod
               ) : (
                 <motion.div
                   key="phase-card"
-                  initial={{ opacity: 0, scale: 0.94, y: 40 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.9, y: 30, transition: { duration: 0.25, ease: "easeInOut" } }}
-                  transition={{ type: "spring", damping: 25, stiffness: 220 }}
+                  initial={{ opacity: 0, scale: 0.96, y: 30, filter: "blur(8px)" }}
+                  animate={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
+                  exit={{ opacity: 0, scale: 0.9, y: 30, filter: "blur(4px)", transition: { duration: 0.25, ease: "easeInOut" } }}
+                  transition={{ 
+                    duration: 0.5, 
+                    ease: [0.22, 1, 0.36, 1],
+                    filter: { duration: 0.4 }
+                  }}
                   className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
                 >
                   <motion.div
+                    initial={{ filter: "blur(6px)" }}
+                    animate={{ filter: "blur(0px)" }}
+                    transition={{ duration: 0.35, delay: 0.1 }}
                     className={`relative w-full max-w-lg max-h-[90vh] overflow-y-auto bg-gradient-to-br ${theme.bg} rounded-2xl shadow-2xl border-2 ${theme.border} pointer-events-auto scrollbar-hide`}
                     style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
                     onClick={(e) => e.stopPropagation()}
