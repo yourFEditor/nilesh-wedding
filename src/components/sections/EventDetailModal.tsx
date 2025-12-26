@@ -283,7 +283,7 @@ export const EventDetailModal = ({ isOpen, onClose, day, theme }: EventDetailMod
     <AnimatePresence mode="wait">
       {isOpen && (
         <>
-          {/* Backdrop with smooth scale-down on click */}
+          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -292,173 +292,155 @@ export const EventDetailModal = ({ isOpen, onClose, day, theme }: EventDetailMod
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 cursor-pointer"
           />
 
-          {/* Floating image that appears first */}
+          {/* Modal container */}
           <motion.div
-            initial={{ opacity: 0, y: 100, scale: 0.5 }}
-            animate={{ 
-              opacity: 1, 
-              y: 0, 
-              scale: 1,
-              transition: { 
-                duration: 0.5, 
-                ease: [0.34, 1.56, 0.64, 1] // Spring-like bounce
-              }
-            }}
-            exit={{ 
-              opacity: 0, 
-              y: 50, 
-              scale: 0.5,
-              transition: { duration: 0.2, ease: "easeIn" }
-            }}
-            className="fixed inset-0 z-[60] flex items-center justify-center pointer-events-none"
-          >
-            <motion.div
-              initial={{ y: 0 }}
-              animate={{ 
-                y: -80,
-                transition: { 
-                  delay: 0.4, 
-                  duration: 0.4, 
-                  ease: "easeOut" 
-                }
-              }}
-              className="relative"
-            >
-              {eventImage ? (
-                <motion.img 
-                  src={eventImage} 
-                  alt={day.title}
-                  className="w-40 h-40 sm:w-48 sm:h-48 object-contain drop-shadow-2xl"
-                  animate={{
-                    y: [0, -8, 0],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 0.8,
-                  }}
-                />
-              ) : (
-                <motion.div
-                  animate={{
-                    y: [0, -8, 0],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 0.8,
-                  }}
-                >
-                  <CoupleIllustration theme={theme.theme} className="w-32 h-40 drop-shadow-2xl" />
-                </motion.div>
-              )}
-              {/* Glow effect behind the image */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ 
-                  opacity: [0.3, 0.6, 0.3], 
-                  scale: [0.9, 1.1, 0.9],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="absolute inset-0 -z-10 rounded-full blur-3xl"
-                style={{ backgroundColor: theme.primary, opacity: 0.4 }}
-              />
-            </motion.div>
-          </motion.div>
-
-          {/* Modal card that slides up after image */}
-          <motion.div
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ 
-              opacity: 1, 
-              y: 0,
-              transition: { 
-                delay: 0.5, 
-                duration: 0.5, 
-                type: "spring", 
-                damping: 25, 
-                stiffness: 200 
-              }
-            }}
-            exit={{ 
-              opacity: 0, 
-              scale: 0.9, 
-              y: 30,
-              transition: { duration: 0.25, ease: "easeInOut" }
-            }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
           >
-            <motion.div
-              className={`relative w-full max-w-lg max-h-[90vh] overflow-y-auto bg-gradient-to-br ${theme.bg} rounded-2xl shadow-2xl border-2 ${theme.border} pointer-events-auto scrollbar-hide`}
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Floating illustrations */}
-              <div className="absolute top-4 left-4 opacity-30 pointer-events-none">
-                <FloatingDecoration delay={0}>
-                  {renderIllustration(theme.illustrations[0], theme.primary, "w-12 h-12")}
-                </FloatingDecoration>
-              </div>
-              <div className="absolute top-4 right-16 opacity-25 pointer-events-none">
-                <FloatingDecoration delay={0.5}>
-                  {renderIllustration(theme.illustrations[1] || theme.illustrations[0], theme.secondary, "w-10 h-10")}
-                </FloatingDecoration>
-              </div>
-              <div className="absolute bottom-4 left-4 opacity-25 pointer-events-none">
-                <FloatingDecoration delay={1}>
-                  {renderIllustration(theme.illustrations[2] || theme.illustrations[0], theme.primary, "w-10 h-10")}
-                </FloatingDecoration>
-              </div>
-              <div className="absolute bottom-4 right-4 opacity-30 pointer-events-none">
-                <FloatingDecoration delay={1.5}>
-                  {renderIllustration(theme.illustrations[0], theme.secondary, "w-12 h-12")}
-                </FloatingDecoration>
-              </div>
-
-              {/* Close button */}
-              <button
-                onClick={onClose}
-                className={`absolute top-4 right-4 z-10 p-2 rounded-full bg-white/80 hover:bg-white ${theme.textColor} transition-all duration-200 shadow-lg hover:scale-110`}
+            <div className="relative w-full max-w-lg pointer-events-auto">
+              {/* Image that floats up first - positioned at top of card */}
+              <motion.div
+                initial={{ opacity: 0, y: 100, scale: 0.4 }}
+                animate={{ 
+                  opacity: 1, 
+                  y: 0, 
+                  scale: 1,
+                }}
+                exit={{ 
+                  opacity: 0, 
+                  y: 50, 
+                  scale: 0.5,
+                  transition: { duration: 0.2 }
+                }}
+                transition={{ 
+                  duration: 0.5, 
+                  ease: [0.34, 1.56, 0.64, 1]
+                }}
+                className="absolute left-1/2 -translate-x-1/2 -top-16 sm:-top-20 z-20"
               >
-                <X className="w-5 h-5" />
-              </button>
-
-              {/* Header */}
-              <div className={`${theme.headerBg} py-6 px-8 text-center relative overflow-hidden`}>
-                {/* Background pattern */}
-                <div className="absolute inset-0 opacity-10">
-                  <div
-                    className="w-full h-full"
-                    style={{
-                      backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='15' stroke='white' stroke-width='0.5' fill='none'/%3E%3C/svg%3E")`,
-                      backgroundSize: "40px 40px",
+                {eventImage ? (
+                  <motion.img 
+                    src={eventImage} 
+                    alt={day.title}
+                    className="w-32 h-32 sm:w-40 sm:h-40 object-contain drop-shadow-2xl"
+                    animate={{
+                      y: [0, -5, 0],
+                    }}
+                    transition={{
+                      duration: 2.5,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: 1,
                     }}
                   />
-                </div>
-                <h2 className="font-script text-3xl sm:text-4xl text-white drop-shadow-lg relative z-10">
-                  {day.title}
-                </h2>
-                {day.subtitle && (
-                  <p className="text-white/90 mt-1 font-body text-sm relative z-10">{day.subtitle}</p>
+                ) : (
+                  <motion.div
+                    animate={{
+                      y: [0, -5, 0],
+                    }}
+                    transition={{
+                      duration: 2.5,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: 1,
+                    }}
+                  >
+                    <CoupleIllustration theme={theme.theme} className="w-28 h-36 drop-shadow-2xl" />
+                  </motion.div>
                 )}
-              </div>
+              </motion.div>
 
-              {/* Content */}
-              <div className="p-4 space-y-3 relative">
-                {/* Date */}
-                <div className={`flex items-center justify-center gap-3 ${theme.textColor}`}>
-                  <Calendar className="w-5 h-5" />
-                  <span className="font-heading text-lg font-semibold">{day.date}</span>
+              {/* Card that appears after image */}
+              <motion.div
+                initial={{ opacity: 0, y: 60, scale: 0.9 }}
+                animate={{ 
+                  opacity: 1, 
+                  y: 0,
+                  scale: 1,
+                }}
+                exit={{ 
+                  opacity: 0, 
+                  scale: 0.85, 
+                  y: 30,
+                  transition: { duration: 0.25, ease: "easeInOut" }
+                }}
+                transition={{ 
+                  delay: 0.35, 
+                  duration: 0.5, 
+                  type: "spring", 
+                  damping: 25, 
+                  stiffness: 200 
+                }}
+                className={`relative w-full max-h-[75vh] overflow-y-auto bg-gradient-to-br ${theme.bg} rounded-2xl shadow-2xl border-2 ${theme.border} scrollbar-hide mt-16 sm:mt-20`}
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Floating illustrations */}
+                <div className="absolute top-4 left-4 opacity-30 pointer-events-none">
+                  <FloatingDecoration delay={0}>
+                    {renderIllustration(theme.illustrations[0], theme.primary, "w-12 h-12")}
+                  </FloatingDecoration>
+                </div>
+                <div className="absolute top-4 right-16 opacity-25 pointer-events-none">
+                  <FloatingDecoration delay={0.5}>
+                    {renderIllustration(theme.illustrations[1] || theme.illustrations[0], theme.secondary, "w-10 h-10")}
+                  </FloatingDecoration>
+                </div>
+                <div className="absolute bottom-4 left-4 opacity-25 pointer-events-none">
+                  <FloatingDecoration delay={1}>
+                    {renderIllustration(theme.illustrations[2] || theme.illustrations[0], theme.primary, "w-10 h-10")}
+                  </FloatingDecoration>
+                </div>
+                <div className="absolute bottom-4 right-4 opacity-30 pointer-events-none">
+                  <FloatingDecoration delay={1.5}>
+                    {renderIllustration(theme.illustrations[0], theme.secondary, "w-12 h-12")}
+                  </FloatingDecoration>
                 </div>
 
-                {/* Spacer for the floating image */}
-                <div className="h-16 sm:h-20" />
+                {/* Close button */}
+                <button
+                  onClick={onClose}
+                  className={`absolute top-4 right-4 z-10 p-2 rounded-full bg-white/80 hover:bg-white ${theme.textColor} transition-all duration-200 shadow-lg hover:scale-110`}
+                >
+                  <X className="w-5 h-5" />
+                </button>
+
+                {/* Header */}
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                  className={`${theme.headerBg} py-6 px-8 text-center relative overflow-hidden`}
+                >
+                  {/* Background pattern */}
+                  <div className="absolute inset-0 opacity-10">
+                    <div
+                      className="w-full h-full"
+                      style={{
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='15' stroke='white' stroke-width='0.5' fill='none'/%3E%3C/svg%3E")`,
+                        backgroundSize: "40px 40px",
+                      }}
+                    />
+                  </div>
+                  <h2 className="font-script text-3xl sm:text-4xl text-white drop-shadow-lg relative z-10">
+                    {day.title}
+                  </h2>
+                  {day.subtitle && (
+                    <p className="text-white/90 mt-1 font-body text-sm relative z-10">{day.subtitle}</p>
+                  )}
+                </motion.div>
+
+                {/* Content */}
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.6 }}
+                  className="p-4 space-y-3 relative"
+                >
+                  {/* Date */}
+                  <div className={`flex items-center justify-center gap-3 ${theme.textColor}`}>
+                    <Calendar className="w-5 h-5" />
+                    <span className="font-heading text-lg font-semibold">{day.date}</span>
+                  </div>
 
                 {/* Events List */}
                 <div className="space-y-2">
@@ -524,8 +506,9 @@ export const EventDetailModal = ({ isOpen, onClose, day, theme }: EventDetailMod
                     </a>
                   </div>
                 )}
-              </div>
-            </motion.div>
+                </motion.div>
+              </motion.div>
+            </div>
           </motion.div>
         </>
       )}
