@@ -606,7 +606,7 @@ const EventDayCard = ({
                     className={`flex items-center gap-1.5 ${theme.textColor} ml-2 flex-shrink-0`}
                   >
                     <Clock className="w-4 h-4" />
-                    <span className="font-body text-sm sm:text-base font-medium whitespace-nowrap">
+                    <span className="font-heading text-sm sm:text-base font-semibold whitespace-nowrap">
                       {event.time}
                     </span>
                   </div>
