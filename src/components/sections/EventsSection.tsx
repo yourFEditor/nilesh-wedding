@@ -499,7 +499,7 @@ const EventDayCard = ({
 
         {/* Event Image - positioned below header */}
         {eventImage && (
-          <div className={`flex items-center justify-center flex-1 z-10 ${day.title.toLowerCase().includes('lagan') ? 'py-4 sm:py-5' : ''}`}>
+          <div className={`flex items-center justify-center flex-1 z-10 ${day.title.toLowerCase().includes('lagan') ? 'py-6 sm:py-8' : ''}`}>
             <img 
               src={eventImage} 
               alt={day.title}
