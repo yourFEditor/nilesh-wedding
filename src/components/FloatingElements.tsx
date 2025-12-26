@@ -13,9 +13,9 @@ const FloatingDiya = ({ delay = 0, size = "md", left = "10%", top = "20%" }: Flo
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   
   const sizeConfig = {
-    sm: { width: isMobile ? 20 : 35, height: isMobile ? 26 : 45, glow: 25, flame: 12 },
-    md: { width: isMobile ? 28 : 50, height: isMobile ? 36 : 65, glow: 40, flame: 18 },
-    lg: { width: isMobile ? 38 : 70, height: isMobile ? 49 : 90, glow: 55, flame: 24 },
+    sm: { width: isMobile ? 16 : 28, height: isMobile ? 21 : 36, glow: 25, flame: 12 },
+    md: { width: isMobile ? 22 : 38, height: isMobile ? 29 : 49, glow: 40, flame: 18 },
+    lg: { width: isMobile ? 30 : 52, height: isMobile ? 39 : 68, glow: 55, flame: 24 },
   };
 
   const config = sizeConfig[size];
@@ -104,9 +104,9 @@ const FloatingLotus = ({ delay = 0, size = "md", left = "10%", top = "20%" }: Fl
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   
   const sizeConfig = {
-    sm: isMobile ? 24 : 40,
-    md: isMobile ? 36 : 60,
-    lg: isMobile ? 50 : 85,
+    sm: isMobile ? 18 : 32,
+    md: isMobile ? 28 : 48,
+    lg: isMobile ? 40 : 65,
   };
 
   const actualSize = sizeConfig[size];
@@ -312,7 +312,7 @@ export const FloatingElements = ({ variant = "mixed", intensity = "heavy", heroO
                 ease: "easeInOut",
               }}
             >
-              <svg width={typeof window !== 'undefined' && window.innerWidth < 768 ? 55 : 100} height={typeof window !== 'undefined' && window.innerWidth < 768 ? 72 : 130} viewBox="0 0 50 65">
+              <svg width={typeof window !== 'undefined' && window.innerWidth < 768 ? 42 : 75} height={typeof window !== 'undefined' && window.innerWidth < 768 ? 55 : 98} viewBox="0 0 50 65">
                 <defs>
                   <linearGradient id={`diyaGoldFront-${i}`} x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#fcd34d" />
