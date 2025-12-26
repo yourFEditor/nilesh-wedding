@@ -490,11 +490,11 @@ const EventDayCard = ({
 
         {/* Event Image - positioned below header */}
         {eventImage && (
-          <div className="flex items-center justify-center py-2 z-10">
+          <div className="flex items-center justify-center py-1 z-10 overflow-hidden">
             <img 
               src={eventImage} 
               alt={day.title}
-              className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 object-contain drop-shadow-lg"
+              className="w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 object-contain drop-shadow-lg scale-125"
             />
           </div>
         )}
