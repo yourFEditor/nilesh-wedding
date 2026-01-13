@@ -38,13 +38,13 @@ const weddingData = {
   // Events
   eventDays: [
     {
-      title: "Ganesh Sthapana",
+      title: "Ganesh Pooja",
       date: "Saturday, 31st January 2026",
       venue: "At Residence",
       address: "A-21, Sudama Marg, Vijay Vadi, Path No. 6, Sikar Road, Jaipur",
       mapLink: "https://maps.app.goo.gl/7ZfAks4gN52277737",
       events: [
-        { name: "Ganesh Sthapana", time: "9:00 am", date: "", description: "" },
+        { name: "Ganesh Pooja", time: "9:00 am", date: "", description: "" },
       ],
     },
     {
